@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Regate Store - Futsal</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+<style>
+body { margin:0; background:#000; font-family:'Montserrat', sans-serif; color:#fff; }
+.catalogo { width:95%; margin:30px auto; display:flex; flex-wrap:wrap; justify-content:space-around; }
+.producto { 
+  width:30%; 
+  background:#111; 
+  margin:10px; 
+  padding:10px; 
+  position:relative; 
+  border-radius:10px;
+  box-shadow:0 0 20px rgba(255,255,255,0.2);
+  border:2px solid transparent;
+  background-image: linear-gradient(#111, #111), 
+    linear-gradient(45deg, turquoise, fuchsia, yellow, white, green);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  animation: borderAnim 5s linear infinite;
+}
+@keyframes borderAnim {
+  0% { background-image: linear-gradient(#111, #111), linear-gradient(45deg, turquoise, fuchsia, yellow, white, green); }
+  100% { background-image: linear-gradient(#111, #111), linear-gradient(405deg, turquoise, fuchsia, yellow, white, green); }
+}
+.producto h2 { font-size:16px; color:#fff; text-align:center; }
+.producto p { text-align:center; font-size:14px; color:#fff; }
+.swiper { width:100%; height:250px; }
+.swiper-slide img { width:100%; height:auto; display:block; }
+.swiper-pagination { bottom:5px !important; }
+h1 { text-align:center; color:#fff; font-size:32px; margin-top:20px; font-weight:bold; }
+.boton { 
+  display:flex; 
+  align-items:center; 
+  justify-content:center; 
+  gap:8px; 
+  margin:10px auto; 
+  padding:10px 20px; 
+  background:#fff; 
+  color:#000; 
+  border:none; 
+  border-radius:5px; 
+  cursor:pointer; 
+  font-weight:bold; 
+  font-family:'Montserrat', sans-serif; 
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.boton:hover { transform: scale(1.1); box-shadow:0 0 15px #fff; }
+
+/* Carrito flotante abajo */
+#carrito {
+  position:fixed; bottom:20px; right:20px; background:#111; color:#fff;
+  border:2px solid #25D366; padding:15px; border-radius:10px;
+  width:250px; max-height:300px; overflow-y:auto; box-shadow:0 0 15px rgba(255,255,255,0.5);
+}
+#carrito h3 { margin:0 0 10px; text-align:center; }
+#carrito ul { list-style:none; padding:0; margin:0; }
+#carrito li { margin:5px 0; font-size:14px; }
+#whatsapp { display:block; margin-top:10px; padding:10px; background:#25D366; color:#fff; text-align:center; border-radius:5px; text-decoration:none; font-weight:bold; }
+#whatsapp:hover { background:#20b858; }
+</style>
+</head>
+<body>
+
+<h1>Regate Store - Futsal</h1>
+<div id="carrito">
+  <h3>🛒 Carrito</h3>
+  <ul id="lista-carrito"></ul>
+  <a id="whatsapp" href="#" target="_blank">Enviar pedido por WhatsApp</a>
+</div>
+
+<div class="catalogo">
+
+            <div class="producto">
+              <h2>MAX ESENCIAL GOLD (EDICIÓN LIMITADA)</h2>
+              <p>Precio: $38000</p>
+              <p>Tallas disponibles: 37,38,39,41,45</p>
+              <div class="swiper">
+                <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/esencial-negra-v2-3.png?v=1748972811" alt="MAX ESENCIAL GOLD (EDICIÓN LIMITADA)"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/esencial-blanca-v2-3.png?v=1748972811" alt="MAX ESENCIAL GOLD (EDICIÓN LIMITADA)"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TABLADETALLASESENCIALGOLD.webp?v=1756915397" alt="MAX ESENCIAL GOLD (EDICIÓN LIMITADA)"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/esencial-negra-v2-4.png?v=1756915397" alt="MAX ESENCIAL GOLD (EDICIÓN LIMITADA)"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/esencial-blanca-v2-4.png?v=1756915397" alt="MAX ESENCIAL GOLD (EDICIÓN LIMITADA)"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/esencial-blanca-v2-2.png?v=1756915397" alt="MAX ESENCIAL GOLD (EDICIÓN LIMITADA)"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/esencial-blanca-v2-1.png?v=1756915397" alt="MAX ESENCIAL GOLD (EDICIÓN LIMITADA)"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/esencial-negra-v2-1.png?v=1756915397" alt="MAX ESENCIAL GOLD (EDICIÓN LIMITADA)"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/esencial-negra-v2-2.png?v=1756915397" alt="MAX ESENCIAL GOLD (EDICIÓN LIMITADA)"></div>
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+              <button class="boton" onclick="agregarCarrito('MAX ESENCIAL GOLD (EDICIÓN LIMITADA)', '38000', '37,38,39,41,45')">🛒 Agregar al carrito</button>
+            </div>
+            
+            <div class="producto">
+              <h2>STREET</h2>
+              <p>Precio: $39000</p>
+              <p>Tallas disponibles: 37,38,39,41,46</p>
+              <div class="swiper">
+                <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralstreetmorado.webp?v=1760549603" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralstreetblancoxazul.webp?v=1760549603" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralstreetrojo.webp?v=1760549603" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TABLADETALLASSTREET_1.webp?v=1760714538" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralstreetverde.webp?v=1760714538" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/frontalstreetmorado.webp?v=1760714538" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/suelastreetmorado.webp?v=1760714538" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/frontalstreetblancoxazul.webp?v=1760714538" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/detallestreetblancoxazul.webp?v=1760714538" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralstreetnegro.webp?v=1760714538" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/detallestreetnegro.webp?v=1760714538" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/frontalstreetrojo.webp?v=1760714538" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/detallestreetrojo.webp?v=1760714538" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/suelastreetrojo.webp?v=1760714538" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/atrasstreetrojo.webp?v=1760714538" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Frontalstreetverde.webp?v=1760714538" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/detallestreetverde.webp?v=1760714538" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/suelasreetverde.webp?v=1760714538" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/atrasstreetverdes.webp?v=1760714538" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/frontalstreetnegro.webp?v=1760714538" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/suelastreetnegro.webp?v=1760714538" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/atrasstreetnegro.webp?v=1760714538" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/detallestreetmorado.webp?v=1760714538" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/atrasstreetmorado.webp?v=1760714538" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/suelastreetblancoxazul.webp?v=1760714538" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/atrasstreetblancoxazul.webp?v=1760714538" alt="STREET"></div>
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+              <button class="boton" onclick="agregarCarrito('STREET', '39000', '37,38,39,41,46')">🛒 Agregar al carrito</button>
+            </div>
+            
+            <div class="producto">
+              <h2>ULTRA</h2>
+              <p>Precio: $41000</p>
+              <p>Tallas disponibles: 37,38,39,41,48</p>
+              <div class="swiper">
+                <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/ultra-blanca-turqueza-3.png?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TURQUEZA-3_5a373dad-4d5c-4985-93b6-2e7d77e689c3.png?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/BLANCA3_adf68652-bf20-4946-ad22-3f8a533e6a9d.png?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/NEGRA3_29837916-41f1-4ac5-a34d-be7bf862bf29.png?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TABLADETALLASULTRA.webp?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/BLANCA6_177c8424-3320-483a-ae18-a894317947a4.png?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/AZUL3_6e439b7e-e9f4-4f75-a938-5ab7ff1c8db9.png?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/AZUL6_b6b23314-24a4-46de-b14b-c724e51cea89.png?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/NEGRA5_9937b838-e500-469a-a469-9d5237584c69.png?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TURQUEZA-4.png?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/BLANCA4_1e09f087-7bb7-478e-9fb2-d886e2b52deb.png?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/AZUL4_dbba4148-1b59-491d-ad8d-062f2cd51640.png?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TURQUEZA-1.png?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/NEGRA4_1ddd4d63-404b-4715-9c0a-569a051d51a9.png?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/BLANCA1_cacf49e3-9f5a-49a4-94a2-9844f9c32404.png?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/AZUL1_58c1b6c6-04ab-4105-b72d-222fdfef16bf.png?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/NEGRA1_80774627-c1d7-422d-a11d-87123cfd860e.png?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TURQUEZA-2.png?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/BLANCA2_8a37f5aa-2cf7-4763-8643-12f51dd9c525.png?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/AZUL2_6f3a33ae-10dc-4339-b876-62bab481edac.png?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/NEGRA2_f7d59e75-e868-405b-af27-0f83a92a7965.png?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/ultra-blanca-turqueza-4.png?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/ultra-blanca-turqueza-1.png?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/ultra-blanca-turqueza-2.png?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/ultra-negro-morado-3.png?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/ultra-negro-morado-1.png?v=1756920826" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/ultra-negro-morado-4.png?v=1756920826" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/ultra-negro-morado-2.png?v=1756920826" alt="ULTRA"></div>
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+              <button class="boton" onclick="agregarCarrito('ULTRA', '41000', '37,38,39,41,48')">🛒 Agregar al carrito</button>
+            </div>
+            
+            <div class="producto">
+              <h2>ULTRA TORRETIN</h2>
+              <p>Precio: $42000</p>
+              <p>Tallas disponibles: 37,38,39,41,49</p>
+              <div class="swiper">
+                <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/ultra-blanca-turqueza-torretin-3.png?v=1751089661" alt="ULTRA TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/ultra-negro-morado-torretin-3.png?v=1751089661" alt="ULTRA TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TABLADETALLASULTRATORRETIN.webp?v=1756929188" alt="ULTRA TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Ultra-Torretin-Blanco-2.png?v=1756929188" alt="ULTRA TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Ultra-Torretin-Blanco-6.png?v=1756929188" alt="ULTRA TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Ultra-Torretin-Negro-2.png?v=1756929188" alt="ULTRA TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Ultra-Torretin-Negro-5.png?v=1756929188" alt="ULTRA TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Ultra-Torretin-Azul-2.png?v=1756929188" alt="ULTRA TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Ultra-Torretin-Azul-5.png?v=1756929188" alt="ULTRA TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Ultra-Torretin-Blanco-3.png?v=1756929188" alt="ULTRA TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Ultra-Torretin-Negro-3.png?v=1756929188" alt="ULTRA TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Ultra-Torretin-Azul-3.png?v=1756929188" alt="ULTRA TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/ultra-blanca-turqueza-torretin-4.png?v=1756929188" alt="ULTRA TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/ultra-blanca-turqueza-torretin-1.png?v=1756929188" alt="ULTRA TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/ultra-negro-morado-torretin-1.png?v=1756929188" alt="ULTRA TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Ultra-Torretin-Blanco-1.png?v=1756929188" alt="ULTRA TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Ultra-Torretin-Blanco-4.png?v=1756929188" alt="ULTRA TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Ultra-Torretin-Negro-1.png?v=1756929188" alt="ULTRA TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Ultra-Torretin-Negro-4.png?v=1756929188" alt="ULTRA TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Ultra-Torretin-Azul-1.png?v=1756929188" alt="ULTRA TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Ultra-Torretin-Azul-4.png?v=1756929188" alt="ULTRA TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/ultra-blanca-turqueza-torretin-2.png?v=1756929188" alt="ULTRA TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/ultra-negro-morado-torretin-2.png?v=1756929188" alt="ULTRA TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/ultra-negro-morado-torretin-4.png?v=1756929188" alt="ULTRA TORRETIN"></div>
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+              <button class="boton" onclick="agregarCarrito('ULTRA TORRETIN', '42000', '37,38,39,41,49')">🛒 Agregar al carrito</button>
+            </div>
+            
+            <div class="producto">
+              <h2>PRO MAX FUTSAL</h2>
+              <p>Precio: $37000</p>
+              <p>Tallas disponibles: 37,38,39,41,44</p>
+              <div class="swiper">
+                <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/pro-max-blanca-3.png?v=1760803586" alt="PRO MAX FUTSAL"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/pro-max-negra-3.png?v=1760803586" alt="PRO MAX FUTSAL"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TABLADETALLASPROMAX_e6d59fdc-6f88-4b97-be45-9f4c15ecf8f0.webp?v=1761670520" alt="PRO MAX FUTSAL"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/pro-max-blanca-4.png?v=1761670464" alt="PRO MAX FUTSAL"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/pro-max-blanca-1.png?v=1761670483" alt="PRO MAX FUTSAL"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/pro-max-negra-1.png?v=1761670520" alt="PRO MAX FUTSAL"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/pro-max-negra-4.png?v=1761670464" alt="PRO MAX FUTSAL"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/pro-max-blanca-2.png?v=1761670483" alt="PRO MAX FUTSAL"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/pro-max-negra-2.png?v=1761670520" alt="PRO MAX FUTSAL"></div>
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+              <button class="boton" onclick="agregarCarrito('PRO MAX FUTSAL', '37000', '37,38,39,41,44')">🛒 Agregar al carrito</button>
+            </div>
+            
+            <div class="producto">
+              <h2>BARRIO TORRETIN</h2>
+              <p>Precio: $44000</p>
+              <p>Tallas disponibles: 37,38,39,41,51</p>
+              <div class="swiper">
+                <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/LATERALBARRIONEGRO1.webp?v=1755718061" alt="BARRIO TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Lateralbarriogris1.webp?v=1755718045" alt="BARRIO TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TABLADETALLASBARRIOTORRETIN.webp?v=1757782173" alt="BARRIO TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/barrio_gris_torretin.webp?v=1757782184" alt="BARRIO TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/barrio_torretin_negro.webp?v=1757782184" alt="BARRIO TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Frontalbarriogris1.webp?v=1757782184" alt="BARRIO TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Atrasbarriogris1.webp?v=1757782184" alt="BARRIO TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/SuelaBarriogris1.webp?v=1757782184" alt="BARRIO TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/FRONTALBARRIONEGRO1.webp?v=1757782184" alt="BARRIO TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/atrasbarrionegro1.webp?v=1757782184" alt="BARRIO TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/suelanegro1.webp?v=1757782184" alt="BARRIO TORRETIN"></div>
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+              <button class="boton" onclick="agregarCarrito('BARRIO TORRETIN', '44000', '37,38,39,41,51')">🛒 Agregar al carrito</button>
+            </div>
+            
+            <div class="producto">
+              <h2>LEGEND</h2>
+              <p>Precio: $45000</p>
+              <p>Tallas disponibles: 37,38,39,41,52</p>
+              <div class="swiper">
+                <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/laterallegendrojo.webp?v=1758580763" alt="LEGEND"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/laterallegendtuquesa.webp?v=1758580763" alt="LEGEND"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Sintitulo-4.webp?v=1758580763" alt="LEGEND"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/tabladetallaslegend.webp?v=1759339328" alt="LEGEND"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/frontallegendrojo.webp?v=1759339328" alt="LEGEND"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/detallelegendrojo.webp?v=1759339328" alt="LEGEND"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/frontallegendturqueza.webp?v=1759339328" alt="LEGEND"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/detallelegendturquesa.webp?v=1759339328" alt="LEGEND"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Sintitulo-3.webp?v=1759339328" alt="LEGEND"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Sintitulo-2.webp?v=1759339328" alt="LEGEND"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Sintitulo-5.webp?v=1759339328" alt="LEGEND"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Sintitulo-1.webp?v=1759339328" alt="LEGEND"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/suelalegendrojo.webp?v=1759339328" alt="LEGEND"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/atraslegendrojo.webp?v=1759339328" alt="LEGEND"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/suelalegendturquesa.webp?v=1759339328" alt="LEGEND"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/atraslegendturquesa.webp?v=1759339328" alt="LEGEND"></div>
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+              <button class="boton" onclick="agregarCarrito('LEGEND', '45000', '37,38,39,41,52')">🛒 Agregar al carrito</button>
+            </div>
+            
+            <div class="producto">
+              <h2>GUAYOS JUPITER</h2>
+              <p>Precio: $46000</p>
+              <p>Tallas disponibles: 37,38,39,41,53</p>
+              <div class="swiper">
+                <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateraljupiternegro.webp?v=1760461646" alt="GUAYOS JUPITER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateraljupiterblanco.webp?v=1765400030" alt="GUAYOS JUPITER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Lateral_jupiter_celeste.webp?v=1765400030" alt="GUAYOS JUPITER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TABLA_DE_TALLAS_JUPITER.webp?v=1765400030" alt="GUAYOS JUPITER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/frontaljupiternegro.webp?v=1765400030" alt="GUAYOS JUPITER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/frontaljupiterblanco.webp?v=1765400030" alt="GUAYOS JUPITER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/frontal_jupiter_celeste.webp?v=1765400030" alt="GUAYOS JUPITER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/suelajupiternegro.webp?v=1765400030" alt="GUAYOS JUPITER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/detallejupiternegro.webp?v=1765400030" alt="GUAYOS JUPITER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/atrasjupiternegro.webp?v=1765400030" alt="GUAYOS JUPITER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/suelajupiterblanco.webp?v=1765400030" alt="GUAYOS JUPITER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/detallejupiterblanco.webp?v=1765400030" alt="GUAYOS JUPITER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/atrasjupiterblanco.webp?v=1765400030" alt="GUAYOS JUPITER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/detalle_jupiter_celeste.webp?v=1765400030" alt="GUAYOS JUPITER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/suela_jupiter_celeste.webp?v=1765400030" alt="GUAYOS JUPITER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/atras_jupiter_celeste.webp?v=1765400030" alt="GUAYOS JUPITER"></div>
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+              <button class="boton" onclick="agregarCarrito('GUAYOS JUPITER', '46000', '37,38,39,41,53')">🛒 Agregar al carrito</button>
+            </div>
+            
+            <div class="producto">
+              <h2>BARRIO</h2>
+              <p>Precio: $47000</p>
+              <p>Tallas disponibles: 37,38,39,41,54</p>
+              <div class="swiper">
+                <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateral_barrio_negro_x_aguamarina.webp?v=1767712538" alt="BARRIO"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Lateral_barrio_azul_x_aguamarina.webp?v=1767712579" alt="BARRIO"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralbarrioblancoxaguamarina.webp?v=1767712033" alt="BARRIO"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TABLA_DE_TALLAS_BARRIO_1.webp?v=1767806355" alt="BARRIO"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Suelabarrioblancoxaguamarina.webp?v=1767806355" alt="BARRIO"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Detallebarrioblancoxaguamarina.webp?v=1767806355" alt="BARRIO"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Frontalbarrioblancoxaguamarina.webp?v=1767806355" alt="BARRIO"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Atrasbarrioblancoxaguamarina.webp?v=1767806355" alt="BARRIO"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Atras_barrio_azul_x_aguamarina.webp?v=1767806355" alt="BARRIO"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Detalle_2_barrio_azul_x_aguamarina.webp?v=1767806355" alt="BARRIO"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Detalle_3_barrio_azul_x_aguamarina.webp?v=1767806355" alt="BARRIO"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Detalle_barrio_azul_x_aguamarina.webp?v=1767806355" alt="BARRIO"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Frontal_barrio_azul_x_aguamarina.webp?v=1767806355" alt="BARRIO"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Suela_barrio_azul_x_aguamarina.webp?v=1767806355" alt="BARRIO"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Atras_barrio_negro_x_aguamarina.webp?v=1767806355" alt="BARRIO"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Detalle_barrio_negro_x_aguamarina.webp?v=1767806355" alt="BARRIO"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Frontal_barrio_negro_x_aguamarina.webp?v=1767806355" alt="BARRIO"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Suela_barrio_negro_x_aguamarina.webp?v=1767806355" alt="BARRIO"></div>
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+              <button class="boton" onclick="agregarCarrito('BARRIO', '47000', '37,38,39,41,54')">🛒 Agregar al carrito</button>
+            </div>
+            
+            <div class="producto">
+              <h2>MAX RUNNING LEGER</h2>
+              <p>Precio: $48000</p>
+              <p>Tallas disponibles: 37,38,39,41,55</p>
+              <div class="swiper">
+                <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/laterallegerazul1.webp?v=1754344057" alt="MAX RUNNING LEGER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/suelalegerazul1.webp?v=1754344057" alt="MAX RUNNING LEGER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TABLADETALLASLEGER.webp?v=1756916047" alt="MAX RUNNING LEGER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Laterallegerblanco1.webp?v=1756916047" alt="MAX RUNNING LEGER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/SUELALEGERBLANCO1.webp?v=1756916047" alt="MAX RUNNING LEGER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/laterallegernegro1.webp?v=1756916047" alt="MAX RUNNING LEGER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/suelalegernegro1.webp?v=1756916047" alt="MAX RUNNING LEGER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/frontallegerazul.webp?v=1756916047" alt="MAX RUNNING LEGER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/atraslegerazul1.webp?v=1756916047" alt="MAX RUNNING LEGER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/fRONTALEGERBLANCO1.webp?v=1756916047" alt="MAX RUNNING LEGER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/ATRASLEGERBLANCO1.webp?v=1756916047" alt="MAX RUNNING LEGER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/frontallegernegro1.webp?v=1756916047" alt="MAX RUNNING LEGER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Atraslegernegro.webp?v=1756916047" alt="MAX RUNNING LEGER"></div>
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+              <button class="boton" onclick="agregarCarrito('MAX RUNNING LEGER', '48000', '37,38,39,41,55')">🛒 Agregar al carrito</button>
+            </div>
+            
+            <div class="producto">
+              <h2>DRAGON</h2>
+              <p>Precio: $43000</p>
+              <p>Tallas disponibles: 37,38,39,41,50</p>
+              <div class="swiper">
+                <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateraldragonnegroxazul.webp?v=1767639876" alt="DRAGON"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateraldragoncoral.webp?v=1767639876" alt="DRAGON"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateraldragonazulxaguamarina.webp?v=1767639876" alt="DRAGON"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TABLA_DE_TALLAS_DRAGON.webp?v=1767806224" alt="DRAGON"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/frontaldragonazulxaguamarina.webp?v=1767806224" alt="DRAGON"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/sueladragonazulxaguamarina.webp?v=1767806224" alt="DRAGON"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/frontaldragoncoral.webp?v=1767806224" alt="DRAGON"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/sueladragoncoral.webp?v=1767806224" alt="DRAGON"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/frontaldragonnegroxazul.webp?v=1767806224" alt="DRAGON"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/sueladragonnegroxazul.webp?v=1767806224" alt="DRAGON"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/detalledragonnegroxazul.webp?v=1767806224" alt="DRAGON"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/atrasdragonnegroxazul.webp?v=1767806224" alt="DRAGON"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/detalledragoncoral.webp?v=1767806224" alt="DRAGON"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/atrasdragoncoral.webp?v=1767806224" alt="DRAGON"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/detalledragonazulxaguamarina.webp?v=1767806224" alt="DRAGON"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/atrasdragonazulxaguamarina.webp?v=1767806224" alt="DRAGON"></div>
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+              <button class="boton" onclick="agregarCarrito('DRAGON', '43000', '37,38,39,41,50')">🛒 Agregar al carrito</button>
+            </div>
+            
+            <div class="producto">
+              <h2>COMPLEX</h2>
+              <p>Precio: $40000</p>
+              <p>Tallas disponibles: 37,38,39,41,47</p>
+              <div class="swiper">
+                <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralcomplexrosa.webp?v=1767646350" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Lateralcomplexnegroxrosa.webp?v=1767646350" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Lateral_complex_morada_x_fucsia.webp?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TABLA_DE_TALLAS_COMPLEX_c1181c36-9107-405a-9729-46a9daacf97f.webp?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Suela_complex_morada_x_fucsia.webp?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Frontal_complex_morada_x_fucsia.webp?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Atras_complex_morada_x_fucsia.webp?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/frontalcomplexrosa.webp?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/atrascomplexrosa.webp?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/frontalcomplexnegroxrosa.webp?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/atrascomplexnegroxrosa.webp?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/complex-azul-3.png?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateral_max_complex_blanco_hielo.webp?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/suela_max_complex_blanco_hielo.webp?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/NEGRA3_d3f844fa-c4c5-4936-a936-b1bb1be9866f.png?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/detalle_max_complex_blanco_hielo.webp?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/frontal_max_complex_blanco_hielo.webp?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/NEGRA1_aca08e48-33c8-4a18-83f3-3cb9744d0f70.png?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/NEGRA6_bb9e5e1a-c8a0-4f49-ac20-49960f841838.png?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TURQUEZA6_a49ba0d2-9dd7-4bcb-8267-6d2382af3fcb.png?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/BLANCA3_86591f8c-1044-4a60-a06c-f80a33ab5475.png?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/BLANCA2_5fce9599-9f3c-4b92-97f5-8071214ed202.png?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/BLANCA5_3038c93d-a1fd-4069-8963-166bfd7e7c28.png?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/BLANCA4_523867a4-a222-4c08-97ad-3d4c9b5a10da.png?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/NEGRA2_5d204577-3ec0-4bee-9268-cff9d77e1eab.png?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/NEGRA4_3525720b-1663-41f6-9798-a8fe62529c5b.png?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/BLANCA1_590620b1-2925-4767-9713-dacd77573e48.png?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/complex-azul-1.png?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/complex-azul-2.png?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/atras_max_complex_blanco_hielo.webp?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/complex-azul-4.png?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/suelacomplexrosa.webp?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/detallecomplexrosa.webp?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/suelacomplexnegroxrosa.webp?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/detallecomplexnegroxrosa.webp?v=1767807244" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Detalle_complex_morada_x_fucsia.webp?v=1767807244" alt="COMPLEX"></div>
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+              <button class="boton" onclick="agregarCarrito('COMPLEX', '40000', '37,38,39,41,47')">🛒 Agregar al carrito</button>
+            </div>
+            
+            <div class="producto">
+              <h2>CG10</h2>
+              <p>Precio: $49000</p>
+              <p>Tallas disponibles: 37,38,39,41,56</p>
+              <div class="swiper">
+                <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Lateral_cg10_plateado.webp?v=1765387047" alt="CG10"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateral_cg10_verde_menta.png?v=1765389114" alt="CG10"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralcg10negroxamarillo.webp?v=1765487376" alt="CG10"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TABLA_DE_TALLAS_CG10.webp?v=1765487376" alt="CG10"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Frontal_cg10_plateado.webp?v=1765551595" alt="CG10"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/detalle_cg10_plateado_1.webp?v=1765551639" alt="CG10"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Suela_cg10_plateado.webp?v=1765551639" alt="CG10"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/frontal_cg10_verde_menta.png?v=1765551639" alt="CG10"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/detalle_cg10_verde_menta_copia.webp?v=1765551639" alt="CG10"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/suela_cg10_verde_menta.png?v=1765551639" alt="CG10"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Detalle_cg10_plateado.webp?v=1765551639" alt="CG10"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/frontalcg10negroxamarillo.webp?v=1765551639" alt="CG10"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/detalle_cg10_negro_x_amarillo_1.webp?v=1765551639" alt="CG10"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/suelacg10negroxamarillo.webp?v=1765551639" alt="CG10"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/detallecg10negroxamarillo.webp?v=1765551639" alt="CG10"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Atras_cg10_plateado.webp?v=1765551639" alt="CG10"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/atrascg10negroxamarillo.webp?v=1765551639" alt="CG10"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/atras_cg10_verde_menta.png?v=1765551639" alt="CG10"></div>
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+              <button class="boton" onclick="agregarCarrito('CG10', '49000', '37,38,39,41,56')">🛒 Agregar al carrito</button>
+            </div>
+            
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+// Inicialización global de Swiper
+var swiper = new Swiper('.swiper', {
+  loop: true,
+  pagination: { el: '.swiper-pagination', clickable: true },
+  autoplay: { delay: 2000, disableOnInteraction: false }
+});
+
+function agregarCarrito(nombre, precio, tallas) {
+  const lista = document.getElementById('lista-carrito');
+  const item = document.createElement('li');
+  item.textContent = nombre + " - $" + precio + " - Tallas: " + tallas;
+  lista.appendChild(item);
+
+  let productos = [];
+  document.querySelectorAll('#lista-carrito li').forEach(li => productos.push(li.textContent));
+  const mensaje = encodeURIComponent("Hola, quiero comprar:
+" + productos.join("\n"));
+  document.getElementById('whatsapp').href = "https://wa.me/573001112233?text=" + mensaje;
+}
+</script>
+</body>
+</html>
