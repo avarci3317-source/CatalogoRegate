@@ -90,11 +90,21 @@ def generar_html(productos, datos_excel, archivo="catalogo.html"):
 <head>
 <meta charset="UTF-8">
 <title>Regate Store - Futsal</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <style>
-body { margin:0; background:#000; font-family:'Montserrat', sans-serif; color:#fff; }
+/* Base */
+:root {
+  --bg: #000;
+  --card: #111;
+  --accent: #25D366;
+  --muted: #ddd;
+  --danger: #ff3b3b;
+  --red-icon: #ff3b3b;
+}
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); font-family:'Montserrat', sans-serif; color:#fff; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
 
 /* Header fijo y centrado de iconos */
 header {
@@ -102,13 +112,13 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  background: #111;
+  background: var(--card);
   display: flex;
-  justify-content: center; /* centrar contenido horizontalmente */
+  justify-content: center;
   align-items: center;
-  padding: 10px 20px;
+  padding: 12px 20px;
   z-index: 10000;
-  box-shadow: 0 2px 10px rgba(255,255,255,0.08);
+  box-shadow: 0 2px 10px rgba(255,255,255,0.04);
 }
 
 /* Contenedor interno para distribuir título y controles */
@@ -120,7 +130,15 @@ header {
   align-items: center;
 }
 
-header h1 { margin: 0; font-size: 24px; color: #fff; text-align:left; }
+/* Título tienda */
+header h1 {
+  margin: 0;
+  font-size: 26px;
+  color: #fff;
+  text-align:left;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+}
 
 /* Agrupar iconos y carrito y centrar verticalmente */
 .header-right {
@@ -136,7 +154,7 @@ header h1 { margin: 0; font-size: 24px; color: #fff; text-align:left; }
   align-items: center;
 }
 .redes a {
-  color: red;
+  color: var(--red-icon);
   font-size: 20px;
   text-decoration: none;
   display:flex;
@@ -145,26 +163,28 @@ header h1 { margin: 0; font-size: 24px; color: #fff; text-align:left; }
   width:34px;
   height:34px;
   border-radius:6px;
+  transition: transform .12s ease;
 }
+.redes a:hover { transform: translateY(-3px); }
 
 /* Badge contador en el carrito */
 #toggleCarrito {
   position: relative;
-  background: #25D366;
+  background: var(--accent);
   color: #fff;
   padding: 8px 12px;
   border-radius: 20px;
   cursor: pointer;
   font-size: 18px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.4);
+  box-shadow: 0 0 8px rgba(0,0,0,0.35);
   display:flex;
   align-items:center;
   gap:8px;
 }
 #toggleCarrito .badge {
-  background: #ff3b3b;
+  background: var(--danger);
   color: #fff;
-  font-weight: bold;
+  font-weight: 700;
   font-size: 12px;
   padding: 2px 6px;
   border-radius: 12px;
@@ -175,11 +195,11 @@ header h1 { margin: 0; font-size: 24px; color: #fff; text-align:left; }
 /* Carrito flotante (detalle) */
 #carrito {
   position: fixed;
-  top: 70px;
+  top: 80px;
   right: 20px;
-  background: #111;
+  background: var(--card);
   color: #fff;
-  border: 2px solid #25D366;
+  border: 2px solid var(--accent);
   padding: 12px;
   width: 360px;
   max-height: 420px;
@@ -192,104 +212,147 @@ header h1 { margin: 0; font-size: 24px; color: #fff; text-align:left; }
   z-index: 9999;
 }
 #carrito.visible { transform: translateY(0); opacity: 1; pointer-events: auto; }
-#carrito h3 { margin:0 0 10px; text-align:center; }
+#carrito h3 { margin:0 0 10px; text-align:center; font-weight:700; }
 #carrito ul { list-style:none; padding:0; margin:0; }
 #carrito li { margin:8px 0; font-size:14px; color:#fff; display:flex; justify-content:space-between; gap:8px; }
 #carrito .empty { color:#bbb; text-align:center; padding:12px 0; }
 
 /* Ajustar catálogo para que no quede debajo del header */
 .catalogo {
-  margin-top: 110px;
+  margin-top: 120px;
   width:95%;
   margin-left:auto;
   margin-right:auto;
   display:flex;
   flex-wrap:wrap;
   justify-content:space-around;
-  gap:12px;
+  gap:14px;
   padding-bottom:60px;
 }
 
-.producto { width:30%; background:#111; margin:10px; padding:12px; border-radius:10px; box-shadow:0 0 12px rgba(255,255,255,0.03); }
-.producto h2 { font-size:16px; color:#fff; text-align:center; margin:8px 0; }
-.producto p { text-align:center; font-size:14px; color:#ddd; margin:6px 0; }
-.swiper { width:100%; height:250px; border-radius:8px; overflow:hidden; background:#000; }
+.producto {
+  width:30%;
+  background: var(--card);
+  margin:10px;
+  padding:14px;
+  border-radius:12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.producto:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,0,0,0.6); }
+
+.producto h2 { font-size:16px; color:#fff; text-align:center; margin:8px 0; font-weight:700; }
+.producto p { text-align:center; font-size:14px; color:var(--muted); margin:6px 0; }
+.swiper { width:100%; height:260px; border-radius:8px; overflow:hidden; background:#000; }
 .swiper-slide img { width:100%; height:100%; object-fit:cover; display:block; }
 .swiper-pagination { bottom:8px !important; }
-.boton { display:flex; align-items:center; justify-content:center; gap:8px; margin:10px auto 0; padding:10px 16px; background:#fff; color:#000; border:none; border-radius:6px; cursor:pointer; font-weight:bold; }
+.boton { display:flex; align-items:center; justify-content:center; gap:8px; margin:12px auto 0; padding:10px 16px; background:#fff; color:#000; border:none; border-radius:8px; cursor:pointer; font-weight:800; }
 
 /* Responsive general */
-@media (max-width: 1024px) { .producto { width:45%; } }
+@media (max-width: 1024px) {
+  .producto { width:45%; }
+}
 
-/* Ajustes móviles: más grande y legible */
+/* Ajustes móviles: más grande y llamativo */
 @media (max-width: 768px) {
+  /* Header: apilar y agrandar */
   header {
-    padding: 14px 16px;
+    padding: 16px 12px;
   }
   .header-inner {
     width: 96%;
-    gap: 8px;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
   }
+  /* Título mucho más grande y llamativo */
   header h1 {
-    font-size: 20px;
+    font-size: 34px; /* aumentado */
+    text-align: center;
+    font-weight: 900;
+    letter-spacing: 1px;
+    line-height: 1.05;
+  }
+
+  /* Iconos y carrito: más grandes y centrados debajo del título */
+  .header-right {
+    width: 100%;
+    display:flex;
+    justify-content:center;
+    gap:18px;
   }
   .redes a {
-    width: 40px;
-    height: 40px;
-    font-size: 22px;
-    border-radius: 8px;
+    width: 52px;
+    height: 52px;
+    font-size: 26px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.02);
+    display:flex;
+    align-items:center;
+    justify-content:center;
   }
   #toggleCarrito {
-    padding: 10px 14px;
-    font-size: 20px;
-    border-radius: 22px;
+    padding: 12px 16px;
+    font-size: 22px;
+    border-radius: 26px;
   }
   #toggleCarrito .badge {
-    min-width: 24px;
-    padding: 4px 8px;
-    font-size: 13px;
+    min-width: 28px;
+    padding: 6px 10px;
+    font-size: 14px;
+    border-radius: 14px;
   }
+
+  /* Carrito: más ancho y centrado en móvil */
   #carrito {
     width: 94%;
     right: 3%;
-    top: 80px;
-    max-height: 60vh;
-    padding: 14px;
+    top: 110px;
+    max-height: 62vh;
+    padding: 16px;
+    border-radius: 12px;
   }
-  #carrito h3 { font-size: 18px; }
+  #carrito h3 { font-size: 20px; }
   #carrito li { font-size: 16px; padding: 8px 0; }
+
+  /* Catálogo: producto ocupa todo el ancho y mayor espaciado */
   .catalogo {
-    margin-top: 120px;
-    gap: 16px;
-    padding-bottom: 80px;
+    margin-top: 150px;
+    gap: 18px;
+    padding-bottom: 100px;
   }
   .producto {
     width: 100%;
-    padding: 16px;
+    padding: 18px;
     margin: 8px 0;
-    border-radius: 12px;
+    border-radius: 14px;
   }
   .producto h2 {
-    font-size: 18px;
-    margin: 10px 0 6px;
+    font-size: 20px;
+    margin: 12px 0 8px;
   }
   .producto p {
-    font-size: 16px;
-    margin: 6px 0;
+    font-size: 18px;
+    margin: 8px 0;
   }
+
+  /* Carrusel: más alto para ocupar pantalla */
   .swiper {
-    height: 320px;
+    height: 380px; /* mayor altura en móvil */
   }
-  .swiper-pagination { bottom: 10px !important; }
+  .swiper-pagination { bottom: 12px !important; }
+
+  /* Botón agregar: más grande y táctil */
   .boton {
-    padding: 12px 18px;
-    font-size: 16px;
-    border-radius: 8px;
+    padding: 14px 20px;
+    font-size: 18px;
+    border-radius: 10px;
   }
-  .header-right { gap: 12px; }
+
+  /* Badge del contador más visible */
   #cart-count {
-    font-size: 14px;
-    padding: 4px 8px;
+    font-size: 15px;
+    padding: 6px 10px;
   }
 }
 </style>
@@ -318,7 +381,7 @@ header h1 { margin: 0; font-size: 24px; color: #fff; text-align:left; }
   <h3>Carrito</h3>
   <ul id="lista-carrito"></ul>
   <div id="carrito-total" style="margin-top:10px; text-align:right; color:#ddd; font-weight:bold;"></div>
-  <a id="whatsapp" href="#" target="_blank" style="display:block; margin-top:10px; padding:10px; background:#25D366; color:#fff; text-align:center; border-radius:5px; text-decoration:none; font-weight:bold;">Enviar pedido por WhatsApp</a>
+  <a id="whatsapp" href="#" target="_blank" style="display:block; margin-top:10px; padding:10px; background:var(--accent); color:#fff; text-align:center; border-radius:6px; text-decoration:none; font-weight:bold;">Enviar pedido por WhatsApp</a>
 </div>
 
 <div class="catalogo">
