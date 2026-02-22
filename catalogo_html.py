@@ -72,12 +72,13 @@ def generar_html(productos, datos_excel, archivo="catalogo.html"):
     ruta_actual = os.path.dirname(os.path.abspath(__file__))
     archivo_salida = os.path.join(ruta_actual, archivo)
 
+    # HTML head con meta viewport y CSS ajustado; título y header cambiados a "Regate FutStore"
     html_head = """<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Regate Store - Futsal</title>
+<title>Regate FutStore</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
@@ -155,7 +156,7 @@ header h1{
 
   /* Title constrained and smaller to avoid overflow and keep layout balanced */
   header h1{
-    font-size: clamp(18px, 5.0vw, 30px); /* smaller max than before */
+    font-size: clamp(18px, 5.0vw, 30px);
     text-align:center;
     max-width: 100%;
     margin:0;
@@ -228,7 +229,7 @@ header h1{
 
 <header>
   <div class="header-inner">
-    <h1>Regate Store - Futsal</h1>
+    <h1>Regate FutStore</h1>
     <div class="header-right">
       <div class="redes" aria-hidden="false">
         <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
