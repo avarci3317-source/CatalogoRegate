@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <style>
-/* Variables */
 :root{
   --bg:#000;
   --card:#0f0f0f;
@@ -15,10 +14,13 @@
   --muted:#d0d0d0;
   --danger:#ff3b3b;
   --icon-bg: rgba(255,255,255,0.02);
+  --header-height-desktop: 90px;
+  --header-height-mobile: 140px; /* usado en mobile para calcular alturas */
 }
 
 /* Reset */
 *{box-sizing:border-box}
+html,body{height:100%}
 body{margin:0;background:var(--bg);font-family:'Montserrat',sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
 
 /* Header */
@@ -29,6 +31,7 @@ header{
   display:flex;justify-content:center;align-items:center;
   padding:14px 20px;z-index:10000;
   box-shadow:0 2px 12px rgba(0,0,0,0.6);
+  height: var(--header-height-desktop);
 }
 .header-inner{
   width:95%;max-width:1200px;display:flex;justify-content:space-between;align-items:center;
@@ -62,7 +65,7 @@ header h1{
 
 /* Carrito panel */
 #carrito{
-  position:fixed;top:86px;right:20px;background:var(--card);border:2px solid var(--accent);
+  position:fixed;top:calc(var(--header-height-desktop) + 8px);right:20px;background:var(--card);border:2px solid var(--accent);
   padding:14px;width:380px;max-height:68vh;overflow-y:auto;border-radius:12px;transform:translateY(-8px);opacity:0;pointer-events:none;transition:all .18s ease;z-index:9999;
 }
 #carrito.visible{transform:translateY(0);opacity:1;pointer-events:auto}
@@ -71,10 +74,29 @@ header h1{
 #carrito li{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.03)}
 #carrito .empty{color:#bbb;text-align:center;padding:12px 0}
 
-/* Catalogo */
-.catalogo{margin-top:130px;width:95%;margin-left:auto;margin-right:auto;display:flex;flex-wrap:wrap;justify-content:space-around;gap:16px;padding-bottom:80px}
+/* Catalogo: en desktop usa grid/flex normal.
+   En mobile usaremos scroll-snap y una sola columna con tarjetas altas
+   para que se vea un modelo completo y el inicio del siguiente. */
+.catalogo {
+  margin-top: calc(var(--header-height-desktop) + 20px);
+  width:95%;
+  margin-left:auto;
+  margin-right:auto;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-around;
+  gap:16px;
+  padding-bottom:80px;
+}
+
+/* Tarjeta producto */
 .producto{
-  width:30%;background:var(--card);margin:10px;padding:16px;border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,0.6);
+  width:30%;
+  background:var(--card);
+  margin:10px;
+  padding:16px;
+  border-radius:14px;
+  box-shadow:0 8px 24px rgba(0,0,0,0.6);
   transition:transform .12s ease;
 }
 .producto:hover{transform:translateY(-6px)}
@@ -97,69 +119,77 @@ header h1{
   .producto{width:45%}
 }
 
-/* Mobile - single column, much larger and bolder */
+/* MOBILE: UNA COLUMNA + SCROLL SNAP + TARJETAS ALTAS para mostrar 1 modelo y el inicio del siguiente */
 @media (max-width:768px){
-  /* Header stacked and huge title */
-  header{padding:18px 12px}
+  :root { --header-height: var(--header-height-mobile); }
+  header{height:var(--header-height-mobile); padding:18px 12px}
   .header-inner{width:96%;flex-direction:column;align-items:center;gap:12px}
   header h1{
-    font-size:48px; /* grande */
+    font-size:44px;
     line-height:1.02;
     text-align:center;
     font-weight:900;
     letter-spacing:1px;
   }
-
-  /* Iconos y carrito centrados y grandes */
   .header-right{width:100%;display:flex;justify-content:center;gap:20px}
   .redes{gap:18px}
   .redes a{
     width:72px;height:72px;font-size:34px;border-radius:14px;background:var(--icon-bg);
     display:flex;align-items:center;justify-content:center;
   }
-
   #toggleCarrito{
     padding:14px 18px;font-size:22px;border-radius:30px;
     box-shadow:0 12px 30px rgba(0,0,0,0.6)
   }
   #toggleCarrito .badge{
-    min-width:34px;padding:8px 12px;font-size:16px;border-radius:18px;font-weight:900
+    min-width:34px;padding:8px 12px;font-size:14px;border-radius:18px;font-weight:900
   }
 
-  /* Carrito panel más ancho */
-  #carrito{
-    width:96%;right:2%;top:140px;max-height:64vh;padding:18px;border-radius:14px;
-  }
-  #carrito h3{font-size:22px}
-  #carrito li{font-size:17px;padding:10px 0}
-
-  /* Catálogo: UNA COLUMNA (apilar verticalmente) */
-  .catalogo{
-    margin-top:160px;
-    gap:20px;
-    padding-bottom:120px;
+  /* Catalogo: ocupar el espacio restante de la pantalla y usar scroll-snap */
+  .catalogo {
+    margin-top: calc(var(--header-height-mobile) + 10px);
     display:flex;
-    flex-direction:column;      /* <-- fuerza una sola columna */
-    align-items:center;         /* centra las tarjetas */
+    flex-direction:column;      /* una columna */
+    align-items:center;
+    gap:18px;
+    padding-bottom:120px;
+    /* Hacemos que el contenedor ocupe la altura disponible para permitir el efecto "peek" */
+    height: calc(100vh - var(--header-height-mobile));
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
   }
-  .producto{
-    width:94%;                  /* tarjeta amplia en móvil */
-    padding:20px;
-    margin:8px 0;
+
+  /* Cada tarjeta ocupa casi toda la altura visible menos un "peek" para el siguiente */
+  .producto {
+    width:94%;
+    padding:18px;
+    margin:0; /* el gap lo maneja el contenedor */
     border-radius:16px;
+    height: calc(100vh - var(--header-height-mobile) - 80px); /* tarjeta alta */
+    min-height: 420px;
+    max-height: calc(100vh - var(--header-height-mobile) - 60px);
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+    scroll-snap-align: start; /* al hacer scroll, cada tarjeta encaja al inicio */
+    box-shadow: 0 12px 36px rgba(0,0,0,0.6);
   }
-  .producto h2{font-size:26px}
-  .producto .precio{font-size:22px}
+
+  .producto h2{font-size:26px;margin:12px 0 8px}
+  .producto .precio{font-size:20px}
   .producto .tallas{font-size:18px}
 
-  /* Carrusel muy alto */
-  .swiper{height:420px}
-  .swiper-pagination{bottom:16px!important}
+  /* Carrusel más alto para ocupar la parte superior de la tarjeta */
+  .swiper{height:48%; border-radius:12px}
+  .swiper-slide img{object-fit:cover}
 
-  /* Botón grande */
-  .boton{padding:16px 22px;font-size:20px;border-radius:12px}
+  .boton{padding:16px 22px;font-size:18px;border-radius:12px;margin-top:auto} /* botón pegado abajo de la tarjeta */
 
-  .header-inner{max-width:980px}
+  /* Carrito panel más ancho y más abajo */
+  #carrito{
+    width:94%;right:2%;top:calc(var(--header-height-mobile) + 8px);max-height:60vh;padding:16px;border-radius:14px;
+  }
 }
 
 /* Very small devices */
@@ -168,10 +198,10 @@ header h1{
   .redes a{width:80px;height:80px;font-size:36px}
   #toggleCarrito{font-size:24px;padding:16px 20px}
   #toggleCarrito .badge{min-width:36px;padding:8px 14px;font-size:16px}
-  .swiper{height:460px}
+  .swiper{height:52%}
   .producto h2{font-size:28px}
-  .producto .precio{font-size:24px}
-  .boton{font-size:22px;padding:18px 24px}
+  .producto .precio{font-size:22px}
+  .boton{font-size:20px;padding:18px 24px}
 }
 </style>
 </head>
@@ -202,7 +232,7 @@ header h1{
   <a id="whatsapp" href="#" target="_blank" style="display:block;margin-top:12px;padding:12px;background:var(--accent);color:#fff;text-align:center;border-radius:8px;text-decoration:none;font-weight:800;">Enviar pedido por WhatsApp</a>
 </div>
 
-<div class="catalogo">
+<div class="catalogo" id="catalogo">
 
     <div class="producto">
       <h2>PRO MAX FUTSAL</h2>
@@ -395,6 +425,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const listaCarrito = document.getElementById('lista-carrito');
   const cartCount = document.getElementById('cart-count');
   const carritoTotal = document.getElementById('carrito-total');
+  const catalogo = document.getElementById('catalogo');
 
   // Estado simple del carrito en memoria
   let carritoItems = [];
@@ -470,6 +501,12 @@ document.addEventListener('DOMContentLoaded', function() {
     carrito.classList.remove('visible');
     carrito.setAttribute('aria-hidden', 'true');
   });
+
+  // Mejora UX: en móvil, al soltar scroll, ajustar para que la tarjeta active quede alineada (snap already handles most)
+  if (window.innerWidth <= 768) {
+    // permitir scroll con el dedo y suavizar el snap
+    catalogo.style.scrollBehavior = 'smooth';
+  }
 
   // Inicial UI
   actualizarUICarrito();
