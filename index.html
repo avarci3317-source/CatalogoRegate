@@ -131,9 +131,80 @@ header h1 { margin: 0; font-size: 24px; color: #fff; text-align:left; }
 .swiper-pagination { bottom:8px !important; }
 .boton { display:flex; align-items:center; justify-content:center; gap:8px; margin:10px auto 0; padding:10px 16px; background:#fff; color:#000; border:none; border-radius:6px; cursor:pointer; font-weight:bold; }
 
-/* Responsive */
+/* Responsive general */
 @media (max-width: 1024px) { .producto { width:45%; } }
-@media (max-width: 768px) { .producto { width:100%; } #carrito { width:92%; right:4%; top:90px; max-height:60%; } }
+
+/* Ajustes móviles: más grande y legible */
+@media (max-width: 768px) {
+  header {
+    padding: 14px 16px;
+  }
+  .header-inner {
+    width: 96%;
+    gap: 8px;
+  }
+  header h1 {
+    font-size: 20px;
+  }
+  .redes a {
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+    border-radius: 8px;
+  }
+  #toggleCarrito {
+    padding: 10px 14px;
+    font-size: 20px;
+    border-radius: 22px;
+  }
+  #toggleCarrito .badge {
+    min-width: 24px;
+    padding: 4px 8px;
+    font-size: 13px;
+  }
+  #carrito {
+    width: 94%;
+    right: 3%;
+    top: 80px;
+    max-height: 60vh;
+    padding: 14px;
+  }
+  #carrito h3 { font-size: 18px; }
+  #carrito li { font-size: 16px; padding: 8px 0; }
+  .catalogo {
+    margin-top: 120px;
+    gap: 16px;
+    padding-bottom: 80px;
+  }
+  .producto {
+    width: 100%;
+    padding: 16px;
+    margin: 8px 0;
+    border-radius: 12px;
+  }
+  .producto h2 {
+    font-size: 18px;
+    margin: 10px 0 6px;
+  }
+  .producto p {
+    font-size: 16px;
+    margin: 6px 0;
+  }
+  .swiper {
+    height: 320px;
+  }
+  .swiper-pagination { bottom: 10px !important; }
+  .boton {
+    padding: 12px 18px;
+    font-size: 16px;
+    border-radius: 8px;
+  }
+  .header-right { gap: 12px; }
+  #cart-count {
+    font-size: 14px;
+    padding: 4px 8px;
+  }
+}
 </style>
 </head>
 <body>
@@ -370,32 +441,34 @@ document.addEventListener('DOMContentLoaded', function() {
       let total = 0;
       carritoItems.forEach(function(it, idx) {
         const li = document.createElement('li');
-        li.textContent = it.nombre + ' - ₡' + it.precio + ' - ' + it.tallas;
-        // botón eliminar
-        const btn = document.createElement('button');
-        btn.textContent = 'Eliminar';
-        btn.style.marginLeft = '8px';
-        btn.style.background = '#ff3b3b';
-        btn.style.color = '#fff';
-        btn.style.border = 'none';
-        btn.style.borderRadius = '6px';
-        btn.style.padding = '4px 8px';
-        btn.style.cursor = 'pointer';
-        btn.onclick = function() {
-          carritoItems.splice(idx, 1);
-          actualizarUICarrito();
-        };
-        // contenedor para mostrar nombre y botón
+
+        // contenedor para mostrar nombre y botón eliminar
         const cont = document.createElement('div');
         cont.style.display = 'flex';
         cont.style.justifyContent = 'space-between';
         cont.style.alignItems = 'center';
         cont.style.width = '100%';
+
         const spanLeft = document.createElement('span');
         spanLeft.textContent = it.nombre + ' - ₡' + it.precio + ' - ' + it.tallas;
+        spanLeft.style.flex = '1';
+        spanLeft.style.marginRight = '8px';
+
+        const btn = document.createElement('button');
+        btn.textContent = 'Eliminar';
+        btn.style.background = '#ff3b3b';
+        btn.style.color = '#fff';
+        btn.style.border = 'none';
+        btn.style.borderRadius = '6px';
+        btn.style.padding = '6px 8px';
+        btn.style.cursor = 'pointer';
+        btn.onclick = function() {
+          carritoItems.splice(idx, 1);
+          actualizarUICarrito();
+        };
+
         cont.appendChild(spanLeft);
         cont.appendChild(btn);
-        li.innerHTML = '';
         li.appendChild(cont);
         listaCarrito.appendChild(li);
 
@@ -416,6 +489,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // abrir carrito automáticamente al agregar
     carrito.classList.add('visible');
     carrito.setAttribute('aria-hidden', 'false');
+
+    // En móviles, desplazar la vista hacia el carrito para que el usuario lo vea
+    if (window.innerWidth <= 768) {
+      setTimeout(() => {
+        carrito.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 150);
+    }
   };
 
   toggleCarrito.addEventListener('click', () => {
