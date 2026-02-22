@@ -7,266 +7,161 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <style>
-/* Base */
-:root {
-  --bg: #000;
-  --card: #111;
-  --accent: #25D366;
-  --muted: #ddd;
-  --danger: #ff3b3b;
-  --red-icon: #ff3b3b;
-}
-* { box-sizing: border-box; }
-body { margin:0; background:var(--bg); font-family:'Montserrat', sans-serif; color:#fff; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
-
-/* Header fijo y centrado de iconos */
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: var(--card);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 12px 20px;
-  z-index: 10000;
-  box-shadow: 0 2px 10px rgba(255,255,255,0.04);
+/* Variables */
+:root{
+  --bg:#000;
+  --card:#0f0f0f;
+  --accent:#25D366;
+  --muted:#d0d0d0;
+  --danger:#ff3b3b;
+  --icon-bg: rgba(255,255,255,0.02);
 }
 
-/* Contenedor interno para distribuir título y controles */
-.header-inner {
-  width: 95%;
-  max-width: 1200px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* Reset */
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:'Montserrat',sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+
+/* Header */
+header{
+  position:fixed;
+  top:0;left:0;width:100%;
+  background:var(--card);
+  display:flex;justify-content:center;align-items:center;
+  padding:14px 20px;z-index:10000;
+  box-shadow:0 2px 12px rgba(0,0,0,0.6);
+}
+.header-inner{
+  width:95%;max-width:1200px;display:flex;justify-content:space-between;align-items:center;
+}
+header h1{
+  margin:0;font-size:28px;color:#fff;font-weight:900;letter-spacing:0.6px;
 }
 
-/* Título tienda */
-header h1 {
-  margin: 0;
-  font-size: 26px;
-  color: #fff;
-  text-align:left;
-  font-weight: 800;
-  letter-spacing: 0.6px;
+/* Right group */
+.header-right{display:flex;align-items:center;gap:16px}
+
+/* Redes */
+.redes{display:flex;gap:12px;align-items:center}
+.redes a{
+  color:var(--danger);text-decoration:none;
+  display:flex;align-items:center;justify-content:center;
+  width:40px;height:40px;border-radius:10px;background:var(--icon-bg);
+  transition:transform .12s ease, box-shadow .12s ease;
+  font-size:20px;
+}
+.redes a:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(0,0,0,0.6)}
+
+/* Carrito toggle */
+#toggleCarrito{
+  position:relative;background:var(--accent);color:#fff;padding:8px 12px;border-radius:22px;
+  display:flex;align-items:center;gap:8px;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,0.45)
+}
+#toggleCarrito .badge{
+  background:var(--danger);color:#fff;font-weight:800;font-size:12px;padding:3px 7px;border-radius:14px;min-width:22px;text-align:center;
 }
 
-/* Agrupar iconos y carrito y centrar verticalmente */
-.header-right {
-  display:flex;
-  align-items:center;
-  gap:16px;
+/* Carrito panel */
+#carrito{
+  position:fixed;top:86px;right:20px;background:var(--card);border:2px solid var(--accent);
+  padding:14px;width:380px;max-height:68vh;overflow-y:auto;border-radius:12px;transform:translateY(-8px);opacity:0;pointer-events:none;transition:all .18s ease;z-index:9999;
+}
+#carrito.visible{transform:translateY(0);opacity:1;pointer-events:auto}
+#carrito h3{margin:0 0 10px;text-align:center;font-weight:800}
+#carrito ul{list-style:none;padding:0;margin:0}
+#carrito li{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.03)}
+#carrito .empty{color:#bbb;text-align:center;padding:12px 0}
+
+/* Catalogo */
+.catalogo{margin-top:130px;width:95%;margin-left:auto;margin-right:auto;display:flex;flex-wrap:wrap;justify-content:space-around;gap:16px;padding-bottom:80px}
+.producto{
+  width:30%;background:var(--card);margin:10px;padding:16px;border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,0.6);
+  transition:transform .12s ease;
+}
+.producto:hover{transform:translateY(-6px)}
+.producto h2{font-size:18px;color:#fff;text-align:center;margin:8px 0;font-weight:800}
+.producto .precio{font-size:16px;color:var(--muted);text-align:center;margin:6px 0;font-weight:700}
+.producto .tallas{font-size:14px;color:var(--muted);text-align:center;margin:6px 0}
+.swiper{width:100%;height:280px;border-radius:10px;overflow:hidden;background:#000}
+.swiper-slide img{width:100%;height:100%;object-fit:cover;display:block}
+.swiper-pagination{bottom:10px!important}
+.boton{display:flex;align-items:center;justify-content:center;gap:8px;margin:12px auto 0;padding:12px 18px;background:#fff;color:#000;border:none;border-radius:10px;cursor:pointer;font-weight:900;font-size:16px}
+
+/* Desktop adjustments */
+@media (min-width:1200px){
+  header h1{font-size:30px}
+  .redes a{width:40px;height:40px;font-size:20px}
 }
 
-/* Iconos de redes centrados y en rojo */
-.redes {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-.redes a {
-  color: var(--red-icon);
-  font-size: 20px;
-  text-decoration: none;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  width:34px;
-  height:34px;
-  border-radius:6px;
-  transition: transform .12s ease;
-}
-.redes a:hover { transform: translateY(-3px); }
-
-/* Badge contador en el carrito */
-#toggleCarrito {
-  position: relative;
-  background: var(--accent);
-  color: #fff;
-  padding: 8px 12px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 18px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.35);
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-#toggleCarrito .badge {
-  background: var(--danger);
-  color: #fff;
-  font-weight: 700;
-  font-size: 12px;
-  padding: 2px 6px;
-  border-radius: 12px;
-  min-width: 20px;
-  text-align: center;
+/* Tablet */
+@media (max-width:1024px){
+  .producto{width:45%}
 }
 
-/* Carrito flotante (detalle) */
-#carrito {
-  position: fixed;
-  top: 80px;
-  right: 20px;
-  background: var(--card);
-  color: #fff;
-  border: 2px solid var(--accent);
-  padding: 12px;
-  width: 360px;
-  max-height: 420px;
-  overflow-y: auto;
-  border-radius: 10px;
-  transition: transform 0.22s ease, opacity 0.22s ease;
-  transform: translateY(-10px);
-  opacity: 0;
-  pointer-events: none;
-  z-index: 9999;
-}
-#carrito.visible { transform: translateY(0); opacity: 1; pointer-events: auto; }
-#carrito h3 { margin:0 0 10px; text-align:center; font-weight:700; }
-#carrito ul { list-style:none; padding:0; margin:0; }
-#carrito li { margin:8px 0; font-size:14px; color:#fff; display:flex; justify-content:space-between; gap:8px; }
-#carrito .empty { color:#bbb; text-align:center; padding:12px 0; }
+/* Mobile - make everything much larger and bolder */
+@media (max-width:768px){
+  /* Header stacked and huge title */
+  header{padding:18px 12px}
+  .header-inner{width:96%;flex-direction:column;align-items:center;gap:12px}
+  header h1{
+    font-size:48px; /* much larger title */
+    line-height:1.02;
+    text-align:center;
+    font-weight:900;
+    letter-spacing:1px;
+  }
 
-/* Ajustar catálogo para que no quede debajo del header */
-.catalogo {
-  margin-top: 120px;
-  width:95%;
-  margin-left:auto;
-  margin-right:auto;
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:space-around;
-  gap:14px;
-  padding-bottom:60px;
-}
+  /* Redes and icons centered and very large */
+  .header-right{width:100%;display:flex;justify-content:center;gap:20px}
+  .redes{gap:18px}
+  .redes a{
+    width:72px;height:72px;font-size:34px;border-radius:14px;background:var(--icon-bg);
+    display:flex;align-items:center;justify-content:center;
+  }
 
-.producto {
-  width:30%;
-  background: var(--card);
-  margin:10px;
-  padding:14px;
-  border-radius:12px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
-  transition: transform .12s ease, box-shadow .12s ease;
-}
-.producto:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,0,0,0.6); }
+  /* Carrito toggle larger and pill-like */
+  #toggleCarrito{
+    padding:14px 18px;font-size:22px;border-radius:30px;
+    box-shadow:0 12px 30px rgba(0,0,0,0.6)
+  }
+  #toggleCarrito .badge{
+    min-width:34px;padding:8px 12px;font-size:16px;border-radius:18px;font-weight:900
+  }
 
-.producto h2 { font-size:16px; color:#fff; text-align:center; margin:8px 0; font-weight:700; }
-.producto p { text-align:center; font-size:14px; color:var(--muted); margin:6px 0; }
-.swiper { width:100%; height:260px; border-radius:8px; overflow:hidden; background:#000; }
-.swiper-slide img { width:100%; height:100%; object-fit:cover; display:block; }
-.swiper-pagination { bottom:8px !important; }
-.boton { display:flex; align-items:center; justify-content:center; gap:8px; margin:12px auto 0; padding:10px 16px; background:#fff; color:#000; border:none; border-radius:8px; cursor:pointer; font-weight:800; }
+  /* Carrito panel wider and lower */
+  #carrito{
+    width:96%;right:2%;top:140px;max-height:64vh;padding:18px;border-radius:14px;
+  }
+  #carrito h3{font-size:22px}
+  #carrito li{font-size:17px;padding:10px 0}
 
-/* Responsive general */
-@media (max-width: 1024px) {
-  .producto { width:45%; }
+  /* Catalog layout: single column, big cards */
+  .catalogo{margin-top:180px;gap:20px;padding-bottom:120px}
+  .producto{width:100%;padding:20px;border-radius:16px}
+  .producto h2{font-size:26px}
+  .producto .precio{font-size:22px}
+  .producto .tallas{font-size:18px}
+
+  /* Carrusel very tall for mobile */
+  .swiper{height:420px}
+  .swiper-pagination{bottom:16px!important}
+
+  /* CTA button larger */
+  .boton{padding:16px 22px;font-size:20px;border-radius:12px}
+
+  /* Ensure icons and title feel prominent */
+  .header-inner{max-width:980px}
 }
 
-/* Ajustes móviles: más grande y llamativo */
-@media (max-width: 768px) {
-  /* Header: apilar y agrandar */
-  header {
-    padding: 16px 12px;
-  }
-  .header-inner {
-    width: 96%;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
-  /* Título mucho más grande y llamativo */
-  header h1 {
-    font-size: 34px; /* aumentado */
-    text-align: center;
-    font-weight: 900;
-    letter-spacing: 1px;
-    line-height: 1.05;
-  }
-
-  /* Iconos y carrito: más grandes y centrados debajo del título */
-  .header-right {
-    width: 100%;
-    display:flex;
-    justify-content:center;
-    gap:18px;
-  }
-  .redes a {
-    width: 52px;
-    height: 52px;
-    font-size: 26px;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.02);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
-  #toggleCarrito {
-    padding: 12px 16px;
-    font-size: 22px;
-    border-radius: 26px;
-  }
-  #toggleCarrito .badge {
-    min-width: 28px;
-    padding: 6px 10px;
-    font-size: 14px;
-    border-radius: 14px;
-  }
-
-  /* Carrito: más ancho y centrado en móvil */
-  #carrito {
-    width: 94%;
-    right: 3%;
-    top: 110px;
-    max-height: 62vh;
-    padding: 16px;
-    border-radius: 12px;
-  }
-  #carrito h3 { font-size: 20px; }
-  #carrito li { font-size: 16px; padding: 8px 0; }
-
-  /* Catálogo: producto ocupa todo el ancho y mayor espaciado */
-  .catalogo {
-    margin-top: 150px;
-    gap: 18px;
-    padding-bottom: 100px;
-  }
-  .producto {
-    width: 100%;
-    padding: 18px;
-    margin: 8px 0;
-    border-radius: 14px;
-  }
-  .producto h2 {
-    font-size: 20px;
-    margin: 12px 0 8px;
-  }
-  .producto p {
-    font-size: 18px;
-    margin: 8px 0;
-  }
-
-  /* Carrusel: más alto para ocupar pantalla */
-  .swiper {
-    height: 380px; /* mayor altura en móvil */
-  }
-  .swiper-pagination { bottom: 12px !important; }
-
-  /* Botón agregar: más grande y táctil */
-  .boton {
-    padding: 14px 20px;
-    font-size: 18px;
-    border-radius: 10px;
-  }
-
-  /* Badge del contador más visible */
-  #cart-count {
-    font-size: 15px;
-    padding: 6px 10px;
-  }
+/* Very small devices (extra emphasis) */
+@media (max-width:420px){
+  header h1{font-size:52px}
+  .redes a{width:80px;height:80px;font-size:36px}
+  #toggleCarrito{font-size:24px;padding:16px 20px}
+  #toggleCarrito .badge{min-width:36px;padding:8px 14px;font-size:16px}
+  .swiper{height:460px}
+  .producto h2{font-size:28px}
+  .producto .precio{font-size:24px}
+  .boton{font-size:22px;padding:18px 24px}
 }
 </style>
 </head>
@@ -293,16 +188,16 @@ header h1 {
   <button id="cerrarCarrito" aria-label="Cerrar carrito">✖</button>
   <h3>Carrito</h3>
   <ul id="lista-carrito"></ul>
-  <div id="carrito-total" style="margin-top:10px; text-align:right; color:#ddd; font-weight:bold;"></div>
-  <a id="whatsapp" href="#" target="_blank" style="display:block; margin-top:10px; padding:10px; background:var(--accent); color:#fff; text-align:center; border-radius:6px; text-decoration:none; font-weight:bold;">Enviar pedido por WhatsApp</a>
+  <div id="carrito-total" style="margin-top:12px;text-align:right;color:#ddd;font-weight:800;"></div>
+  <a id="whatsapp" href="#" target="_blank" style="display:block;margin-top:12px;padding:12px;background:var(--accent);color:#fff;text-align:center;border-radius:8px;text-decoration:none;font-weight:800;">Enviar pedido por WhatsApp</a>
 </div>
 
 <div class="catalogo">
 
     <div class="producto">
       <h2>PRO MAX FUTSAL</h2>
-      <p>Precio: ₡37000</p>
-      <p>Tallas disponibles: 39,40,41,42,43</p>
+      <div class="precio">Precio: ₡37000</div>
+      <div class="tallas">Tallas disponibles: 39,40,41,42,43</div>
       <div class="swiper" id="swiper-0">
         <div class="swiper-wrapper">
           <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralpromaxturquesa.webp?v=1770753162" alt="PRO MAX FUTSAL"></div>
@@ -316,8 +211,8 @@ header h1 {
 
     <div class="producto">
       <h2>UNIVERSAL</h2>
-      <p>Precio: ₡37000</p>
-      <p>Tallas disponibles: 39,40,41,42,43</p>
+      <div class="precio">Precio: ₡37000</div>
+      <div class="tallas">Tallas disponibles: 39,40,41,42,43</div>
       <div class="swiper" id="swiper-1">
         <div class="swiper-wrapper">
           <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateraluniversalblanco_3cbe3799-a676-4c54-8381-da0295cc02f5.webp?v=1762269114" alt="UNIVERSAL"></div>
@@ -331,8 +226,8 @@ header h1 {
 
     <div class="producto">
       <h2>STREET</h2>
-      <p>Precio: ₡37000</p>
-      <p>Tallas disponibles: 39,40,41,42,43</p>
+      <div class="precio">Precio: ₡37000</div>
+      <div class="tallas">Tallas disponibles: 39,40,41,42,43</div>
       <div class="swiper" id="swiper-2">
         <div class="swiper-wrapper">
           <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralstreetmorado.webp?v=1760549603" alt="STREET"></div>
@@ -346,8 +241,8 @@ header h1 {
 
     <div class="producto">
       <h2>ULTRA</h2>
-      <p>Precio: ₡38000</p>
-      <p>Tallas disponibles: 39,40,41,42,43</p>
+      <div class="precio">Precio: ₡38000</div>
+      <div class="tallas">Tallas disponibles: 39,40,41,42,43</div>
       <div class="swiper" id="swiper-3">
         <div class="swiper-wrapper">
           <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/ultra-negro-morado-3.png?v=1770755647" alt="ULTRA"></div>
@@ -361,8 +256,8 @@ header h1 {
 
     <div class="producto">
       <h2>ULTRA TORRETIN</h2>
-      <p>Precio: ₡38000</p>
-      <p>Tallas disponibles: 39,40,41,42,43</p>
+      <div class="precio">Precio: ₡38000</div>
+      <div class="tallas">Tallas disponibles: 39,40,41,42,43</div>
       <div class="swiper" id="swiper-4">
         <div class="swiper-wrapper">
           <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/ultra-blanca-turqueza-torretin-3.png?v=1751089661" alt="ULTRA TORRETIN"></div>
@@ -376,8 +271,8 @@ header h1 {
 
     <div class="producto">
       <h2>NEO</h2>
-      <p>Precio: ₡37000</p>
-      <p>Tallas disponibles: 39,40,41,42,43</p>
+      <div class="precio">Precio: ₡37000</div>
+      <div class="tallas">Tallas disponibles: 39,40,41,42,43</div>
       <div class="swiper" id="swiper-5">
         <div class="swiper-wrapper">
           <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralneoturquesa.webp?v=1758643341" alt="NEO"></div>
@@ -391,8 +286,8 @@ header h1 {
 
     <div class="producto">
       <h2>DRAGON</h2>
-      <p>Precio: ₡43000</p>
-      <p>Tallas disponibles: 39,40,41,42,43</p>
+      <div class="precio">Precio: ₡43000</div>
+      <div class="tallas">Tallas disponibles: 39,40,41,42,43</div>
       <div class="swiper" id="swiper-6">
         <div class="swiper-wrapper">
           <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateraldragonnegroxazul.webp?v=1767639876" alt="DRAGON"></div>
@@ -406,8 +301,8 @@ header h1 {
 
     <div class="producto">
       <h2>VALO</h2>
-      <p>Precio: ₡37000</p>
-      <p>Tallas disponibles: 39,40,41,42,43</p>
+      <div class="precio">Precio: ₡37000</div>
+      <div class="tallas">Tallas disponibles: 39,40,41,42,43</div>
       <div class="swiper" id="swiper-7">
         <div class="swiper-wrapper">
           <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralvalonegro.webp?v=1770658846" alt="VALO"></div>
@@ -421,8 +316,8 @@ header h1 {
 
     <div class="producto">
       <h2>BARRIO TORRETIN</h2>
-      <p>Precio: ₡37000</p>
-      <p>Tallas disponibles: 39,40,41,42,43</p>
+      <div class="precio">Precio: ₡37000</div>
+      <div class="tallas">Tallas disponibles: 39,40,41,42,43</div>
       <div class="swiper" id="swiper-8">
         <div class="swiper-wrapper">
           <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/LATERALBARRIONEGRO1.webp?v=1755718061" alt="BARRIO TORRETIN"></div>
@@ -436,8 +331,8 @@ header h1 {
 
     <div class="producto">
       <h2>BARRIO</h2>
-      <p>Precio: ₡37000</p>
-      <p>Tallas disponibles: 39,40,41,42,43</p>
+      <div class="precio">Precio: ₡37000</div>
+      <div class="tallas">Tallas disponibles: 39,40,41,42,43</div>
       <div class="swiper" id="swiper-9">
         <div class="swiper-wrapper">
           <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateral_barrio_negro_x_aguamarina.webp?v=1767712538" alt="BARRIO"></div>
@@ -451,8 +346,8 @@ header h1 {
 
     <div class="producto">
       <h2>COMPLEX</h2>
-      <p>Precio: ₡45000</p>
-      <p>Tallas disponibles: 39,40,41,42,43</p>
+      <div class="precio">Precio: ₡45000</div>
+      <div class="tallas">Tallas disponibles: 39,40,41,42,43</div>
       <div class="swiper" id="swiper-10">
         <div class="swiper-wrapper">
           <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralcomplexrosa.webp?v=1767646350" alt="COMPLEX"></div>
@@ -495,7 +390,6 @@ document.addEventListener('DOMContentLoaded', function() {
   let carritoItems = [];
 
   function actualizarUICarrito() {
-    // actualizar lista
     listaCarrito.innerHTML = '';
     if (carritoItems.length === 0) {
       listaCarrito.innerHTML = '<li class="empty">El carrito está vacío</li>';
@@ -505,7 +399,6 @@ document.addEventListener('DOMContentLoaded', function() {
       carritoItems.forEach(function(it, idx) {
         const li = document.createElement('li');
 
-        // contenedor para mostrar nombre y botón eliminar
         const cont = document.createElement('div');
         cont.style.display = 'flex';
         cont.style.justifyContent = 'space-between';
@@ -535,13 +428,11 @@ document.addEventListener('DOMContentLoaded', function() {
         li.appendChild(cont);
         listaCarrito.appendChild(li);
 
-        // intentar sumar precio si es numérico
         const p = parseFloat(it.precio.replace(/[^0-9.-]+/g,""));
         if (!isNaN(p)) total += p;
       });
       carritoTotal.textContent = 'Total aproximado: ₡' + total;
     }
-    // actualizar badge
     cartCount.textContent = carritoItems.length;
   }
 
@@ -549,7 +440,6 @@ document.addEventListener('DOMContentLoaded', function() {
   window.agregarCarrito = function(nombre, precio, tallas) {
     carritoItems.push({ nombre: nombre, precio: precio, tallas: tallas });
     actualizarUICarrito();
-    // abrir carrito automáticamente al agregar
     carrito.classList.add('visible');
     carrito.setAttribute('aria-hidden', 'false');
 
