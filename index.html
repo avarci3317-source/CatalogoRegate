@@ -97,20 +97,20 @@ header h1{
   .producto{width:45%}
 }
 
-/* Mobile - make everything much larger and bolder */
+/* Mobile - single column, much larger and bolder */
 @media (max-width:768px){
   /* Header stacked and huge title */
   header{padding:18px 12px}
   .header-inner{width:96%;flex-direction:column;align-items:center;gap:12px}
   header h1{
-    font-size:48px; /* much larger title */
+    font-size:48px; /* grande */
     line-height:1.02;
     text-align:center;
     font-weight:900;
     letter-spacing:1px;
   }
 
-  /* Redes and icons centered and very large */
+  /* Iconos y carrito centrados y grandes */
   .header-right{width:100%;display:flex;justify-content:center;gap:20px}
   .redes{gap:18px}
   .redes a{
@@ -118,7 +118,6 @@ header h1{
     display:flex;align-items:center;justify-content:center;
   }
 
-  /* Carrito toggle larger and pill-like */
   #toggleCarrito{
     padding:14px 18px;font-size:22px;border-radius:30px;
     box-shadow:0 12px 30px rgba(0,0,0,0.6)
@@ -127,32 +126,43 @@ header h1{
     min-width:34px;padding:8px 12px;font-size:16px;border-radius:18px;font-weight:900
   }
 
-  /* Carrito panel wider and lower */
+  /* Carrito panel más ancho */
   #carrito{
     width:96%;right:2%;top:140px;max-height:64vh;padding:18px;border-radius:14px;
   }
   #carrito h3{font-size:22px}
   #carrito li{font-size:17px;padding:10px 0}
 
-  /* Catalog layout: single column, big cards */
-  .catalogo{margin-top:180px;gap:20px;padding-bottom:120px}
-  .producto{width:100%;padding:20px;border-radius:16px}
+  /* Catálogo: UNA COLUMNA (apilar verticalmente) */
+  .catalogo{
+    margin-top:160px;
+    gap:20px;
+    padding-bottom:120px;
+    display:flex;
+    flex-direction:column;      /* <-- fuerza una sola columna */
+    align-items:center;         /* centra las tarjetas */
+  }
+  .producto{
+    width:94%;                  /* tarjeta amplia en móvil */
+    padding:20px;
+    margin:8px 0;
+    border-radius:16px;
+  }
   .producto h2{font-size:26px}
   .producto .precio{font-size:22px}
   .producto .tallas{font-size:18px}
 
-  /* Carrusel very tall for mobile */
+  /* Carrusel muy alto */
   .swiper{height:420px}
   .swiper-pagination{bottom:16px!important}
 
-  /* CTA button larger */
+  /* Botón grande */
   .boton{padding:16px 22px;font-size:20px;border-radius:12px}
 
-  /* Ensure icons and title feel prominent */
   .header-inner{max-width:980px}
 }
 
-/* Very small devices (extra emphasis) */
+/* Very small devices */
 @media (max-width:420px){
   header h1{font-size:52px}
   .redes a{width:80px;height:80px;font-size:36px}
