@@ -2,33 +2,22 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1"> <!-- IMPORTANTE para responsive -->
+<meta name="viewport" content="width=device-width, initial-scale=1"> <!-- clave para responsive -->
 <title>Regate Store - Futsal</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <style>
 :root{
-  --bg:#000;
-  --card:#0f0f0f;
-  --accent:#25D366;
-  --muted:#d0d0d0;
-  --danger:#ff3b3b;
-  --icon-bg: rgba(255,255,255,0.02);
-  --header-height-desktop: 90px;
-  --header-height-mobile: 140px;
+  --bg:#000; --card:#0f0f0f; --accent:#25D366; --muted:#d0d0d0; --danger:#ff3b3b; --icon-bg: rgba(255,255,255,0.02);
+  --header-height-desktop: 90px; --header-height-mobile: 140px;
 }
 *{box-sizing:border-box}
 html,body{height:100%}
 body{margin:0;background:var(--bg);font-family:'Montserrat',sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
 
 /* Header */
-header{
-  position:fixed;top:0;left:0;width:100%;
-  background:var(--card);display:flex;justify-content:center;align-items:center;
-  padding:14px 20px;z-index:10000;height:var(--header-height-desktop);
-  box-shadow:0 2px 12px rgba(0,0,0,0.6);
-}
+header{position:fixed;top:0;left:0;width:100%;background:var(--card);display:flex;justify-content:center;align-items:center;padding:14px 20px;z-index:10000;height:var(--header-height-desktop);box-shadow:0 2px 12px rgba(0,0,0,0.6)}
 .header-inner{width:95%;max-width:1200px;display:flex;justify-content:space-between;align-items:center}
 header h1{margin:0;font-size:28px;color:#fff;font-weight:900;letter-spacing:0.6px}
 
@@ -50,11 +39,7 @@ header h1{margin:0;font-size:28px;color:#fff;font-weight:900;letter-spacing:0.6p
 #carrito .empty{color:#bbb;text-align:center;padding:12px 0}
 
 /* Catalogo (desktop/tablet default) */
-.catalogo{
-  margin-top:calc(var(--header-height-desktop) + 20px);
-  width:95%;margin-left:auto;margin-right:auto;
-  display:flex;flex-wrap:wrap;justify-content:space-around;gap:16px;padding-bottom:80px;
-}
+.catalogo{margin-top:calc(var(--header-height-desktop) + 20px);width:95%;margin-left:auto;margin-right:auto;display:flex;flex-wrap:wrap;justify-content:space-around;gap:16px;padding-bottom:80px}
 
 /* Producto tarjeta */
 .producto{width:30%;background:var(--card);margin:10px;padding:16px;border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,0.6);transition:transform .12s ease}
@@ -68,17 +53,10 @@ header h1{margin:0;font-size:28px;color:#fff;font-weight:900;letter-spacing:0.6p
 .boton{display:flex;align-items:center;justify-content:center;gap:8px;margin:12px auto 0;padding:12px 18px;background:#fff;color:#000;border:none;border-radius:10px;cursor:pointer;font-weight:900;font-size:16px}
 
 /* Desktop adjustments */
-@media (min-width:1200px){
-  header h1{font-size:30px}
-  .redes a{width:40px;height:40px;font-size:20px}
-}
+@media (min-width:1200px){ header h1{font-size:30px} .redes a{width:40px;height:40px;font-size:20px} }
+@media (max-width:1024px){ .producto{width:45%} }
 
-/* Tablet */
-@media (max-width:1024px){
-  .producto{width:45%}
-}
-
-/* MOBILE: UNA COLUMNA FORZADA + SCROLL SNAP */
+/* MOBILE: UNA COLUMNA FORZADA + SCROLL SNAP (reglas con !important para evitar override) */
 @media (max-width:768px){
   :root { --header-height: var(--header-height-mobile); }
   header{height:var(--header-height-mobile);padding:18px 12px}
@@ -90,11 +68,11 @@ header h1{margin:0;font-size:28px;color:#fff;font-weight:900;letter-spacing:0.6p
   #toggleCarrito{padding:14px 18px;font-size:22px;border-radius:30px;box-shadow:0 12px 30px rgba(0,0,0,0.6)}
   #toggleCarrito .badge{min-width:34px;padding:8px 12px;font-size:14px;border-radius:18px;font-weight:900}
 
-  /* CONTENEDOR: UNA COLUMNA y scroll-snap */
+  /* CONTENEDOR: UNA COLUMNA y scroll-snap (forzado) */
   .catalogo{
     margin-top:calc(var(--header-height-mobile) + 10px) !important;
     display:flex !important;
-    flex-direction:column !important;      /* fuerza columna */
+    flex-direction:column !important;
     align-items:center !important;
     gap:18px !important;
     padding-bottom:120px !important;
@@ -102,12 +80,12 @@ header h1{margin:0;font-size:28px;color:#fff;font-weight:900;letter-spacing:0.6p
     overflow-y:auto !important;
     scroll-snap-type:y mandatory !important;
     -webkit-overflow-scrolling:touch !important;
-    flex-wrap:nowrap !important;           /* evita que se formen columnas */
+    flex-wrap:nowrap !important;
   }
 
   /* TARJETA: ocupa casi toda la altura visible para mostrar 1 modelo y "peek" del siguiente */
   .producto{
-    width:94% !important;                  /* fuerza ancho completo */
+    width:94% !important;
     padding:18px !important;
     margin:0 !important;
     border-radius:16px !important;
@@ -416,9 +394,8 @@ document.addEventListener('DOMContentLoaded', function() {
     carrito.setAttribute('aria-hidden', 'false');
     if (window.innerWidth <= 768) {
       setTimeout(() => {
-        // al agregar, hacemos scroll suave para que el usuario vea la tarjeta actual y el "peek"
-        const top = window.scrollY;
-        window.scrollTo({ top: top + 10, behavior: 'smooth' });
+        // pequeño ajuste para mantener "peek" visible
+        window.scrollBy({ top: 8, behavior: 'smooth' });
       }, 150);
     }
   };
