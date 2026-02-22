@@ -5,303 +5,433 @@
 <title>Regate Store - Futsal</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <style>
 body { margin:0; background:#000; font-family:'Montserrat', sans-serif; color:#fff; }
-.catalogo { width:95%; margin:30px auto; display:flex; flex-wrap:wrap; justify-content:space-around; }
-.producto { width:30%; background:#111; margin:10px; padding:10px; border-radius:10px; box-shadow:0 0 20px rgba(255,255,255,0.2); }
-.producto h2 { font-size:16px; color:#fff; text-align:center; }
-.producto p { text-align:center; font-size:14px; color:#fff; }
-.swiper { width:100%; height:250px; }
-.swiper-slide img { width:100%; height:auto; display:block; }
-.swiper-pagination { bottom:5px !important; }
-h1 { text-align:center; color:#fff; font-size:32px; margin-top:20px; font-weight:bold; }
-.boton { display:flex; align-items:center; justify-content:center; gap:8px; margin:10px auto; padding:10px 20px; background:#fff; color:#000; border:none; border-radius:5px; cursor:pointer; font-weight:bold; }
-.boton:hover { transform: scale(1.1); box-shadow:0 0 15px #fff; }
 
-/* Carrito flotante */
+/* Header fijo y centrado de iconos */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #111;
+  display: flex;
+  justify-content: center; /* centrar contenido horizontalmente */
+  align-items: center;
+  padding: 10px 20px;
+  z-index: 10000;
+  box-shadow: 0 2px 10px rgba(255,255,255,0.08);
+}
+
+/* Contenedor interno para distribuir título y controles */
+.header-inner {
+  width: 95%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 { margin: 0; font-size: 24px; color: #fff; text-align:left; }
+
+/* Agrupar iconos y carrito y centrar verticalmente */
+.header-right {
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+/* Iconos de redes centrados y en rojo */
+.redes {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.redes a {
+  color: red;
+  font-size: 20px;
+  text-decoration: none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:34px;
+  height:34px;
+  border-radius:6px;
+}
+
+/* Badge contador en el carrito */
+#toggleCarrito {
+  position: relative;
+  background: #25D366;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 18px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.4);
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+#toggleCarrito .badge {
+  background: #ff3b3b;
+  color: #fff;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 12px;
+  min-width: 20px;
+  text-align: center;
+}
+
+/* Carrito flotante (detalle) */
 #carrito {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
+  top: 70px;
+  right: 20px;
   background: #111;
   color: #fff;
   border: 2px solid #25D366;
-  padding: 20px;
-  width: 350px;
-  max-height: 400px;
+  padding: 12px;
+  width: 360px;
+  max-height: 420px;
   overflow-y: auto;
-  box-shadow: 0 0 20px rgba(255,255,255,0.5);
   border-radius: 10px;
-  transition: transform 0.3s ease;
+  transition: transform 0.22s ease, opacity 0.22s ease;
+  transform: translateY(-10px);
+  opacity: 0;
+  pointer-events: none;
   z-index: 9999;
 }
-#carrito.visible { transform: translate(-50%, -50%) scale(1); }
+#carrito.visible { transform: translateY(0); opacity: 1; pointer-events: auto; }
 #carrito h3 { margin:0 0 10px; text-align:center; }
 #carrito ul { list-style:none; padding:0; margin:0; }
-#carrito li { margin:5px 0; font-size:14px; }
-#whatsapp { display:block; margin-top:10px; padding:10px; background:#25D366; color:#fff; text-align:center; border-radius:5px; text-decoration:none; font-weight:bold; }
-#whatsapp:hover { background:#20b858; }
+#carrito li { margin:8px 0; font-size:14px; color:#fff; display:flex; justify-content:space-between; gap:8px; }
+#carrito .empty { color:#bbb; text-align:center; padding:12px 0; }
 
-/* Botón flotante carrito */
-#toggleCarrito {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #25D366;
-  color: #fff;
-  padding: 15px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 22px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  z-index: 10000;
+/* Ajustar catálogo para que no quede debajo del header */
+.catalogo {
+  margin-top: 110px;
+  width:95%;
+  margin-left:auto;
+  margin-right:auto;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-around;
+  gap:12px;
+  padding-bottom:60px;
 }
 
-/* Botón cerrar dentro del carrito */
-#cerrarCarrito {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #f00;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 25px;
-  height: 25px;
-  cursor: pointer;
-  font-weight: bold;
-}
+.producto { width:30%; background:#111; margin:10px; padding:12px; border-radius:10px; box-shadow:0 0 12px rgba(255,255,255,0.03); }
+.producto h2 { font-size:16px; color:#fff; text-align:center; margin:8px 0; }
+.producto p { text-align:center; font-size:14px; color:#ddd; margin:6px 0; }
+.swiper { width:100%; height:250px; border-radius:8px; overflow:hidden; background:#000; }
+.swiper-slide img { width:100%; height:100%; object-fit:cover; display:block; }
+.swiper-pagination { bottom:8px !important; }
+.boton { display:flex; align-items:center; justify-content:center; gap:8px; margin:10px auto 0; padding:10px 16px; background:#fff; color:#000; border:none; border-radius:6px; cursor:pointer; font-weight:bold; }
 
 /* Responsive */
-@media (max-width: 1024px) {
-  .producto { width:45%; }
-}
-@media (max-width: 768px) {
-  .producto { width:90%; }
-  #carrito {
-    width: 90%;
-    max-height: 80%;
-  }
-}
+@media (max-width: 1024px) { .producto { width:45%; } }
+@media (max-width: 768px) { .producto { width:100%; } #carrito { width:92%; right:4%; top:90px; max-height:60%; } }
 </style>
 </head>
 <body>
 
-<h1>Regate Store - Futsal</h1>
+<header>
+  <div class="header-inner">
+    <h1>Regate Store - Futsal</h1>
+    <div class="header-right">
+      <div class="redes" aria-hidden="false">
+        <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+      </div>
+      <div id="toggleCarrito" title="Ver carrito" aria-label="Ver carrito">
+        <span>🛒</span>
+        <span class="badge" id="cart-count">0</span>
+      </div>
+    </div>
+  </div>
+</header>
 
-<div id="toggleCarrito">🛒</div>
-<div id="carrito">
-  <button id="cerrarCarrito">✖</button>
+<div id="carrito" aria-hidden="true">
+  <button id="cerrarCarrito" aria-label="Cerrar carrito">✖</button>
   <h3>Carrito</h3>
   <ul id="lista-carrito"></ul>
-  <a id="whatsapp" href="#" target="_blank">Enviar pedido por WhatsApp</a>
+  <div id="carrito-total" style="margin-top:10px; text-align:right; color:#ddd; font-weight:bold;"></div>
+  <a id="whatsapp" href="#" target="_blank" style="display:block; margin-top:10px; padding:10px; background:#25D366; color:#fff; text-align:center; border-radius:5px; text-decoration:none; font-weight:bold;">Enviar pedido por WhatsApp</a>
 </div>
 
 <div class="catalogo">
 
-            <div class="producto">
-              <h2>MAX ESENCIAL GOLD (EDICIÓN LIMITADA)</h2>
-              <p>Precio: $38000</p>
-              <p>Tallas disponibles: 37,38,39,41,45</p>
-              <div class="swiper">
-                <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/esencial-negra-v2-3.png?v=1748972811" alt="MAX ESENCIAL GOLD (EDICIÓN LIMITADA)"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/esencial-blanca-v2-3.png?v=1748972811" alt="MAX ESENCIAL GOLD (EDICIÓN LIMITADA)"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TABLADETALLASESENCIALGOLD.webp?v=1756915397" alt="MAX ESENCIAL GOLD (EDICIÓN LIMITADA)"></div>
-                </div>
-                <div class="swiper-pagination"></div>
-              </div>
-              <button class="boton" onclick="agregarCarrito('MAX ESENCIAL GOLD (EDICIÓN LIMITADA)', '38000', '37,38,39,41,45')">🛒 Agregar al carrito</button>
-            </div>
-            
-            <div class="producto">
-              <h2>STREET</h2>
-              <p>Precio: $39000</p>
-              <p>Tallas disponibles: 37,38,39,41,46</p>
-              <div class="swiper">
-                <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralstreetmorado.webp?v=1760549603" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralstreetblancoxazul.webp?v=1760549603" alt="STREET"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralstreetrojo.webp?v=1760549603" alt="STREET"></div>
-                </div>
-                <div class="swiper-pagination"></div>
-              </div>
-              <button class="boton" onclick="agregarCarrito('STREET', '39000', '37,38,39,41,46')">🛒 Agregar al carrito</button>
-            </div>
-            
-            <div class="producto">
-              <h2>ULTRA</h2>
-              <p>Precio: $41000</p>
-              <p>Tallas disponibles: 37,38,39,41,48</p>
-              <div class="swiper">
-                <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/ultra-blanca-turqueza-3.png?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TURQUEZA-3_5a373dad-4d5c-4985-93b6-2e7d77e689c3.png?v=1757610932" alt="ULTRA"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/BLANCA3_adf68652-bf20-4946-ad22-3f8a533e6a9d.png?v=1757610932" alt="ULTRA"></div>
-                </div>
-                <div class="swiper-pagination"></div>
-              </div>
-              <button class="boton" onclick="agregarCarrito('ULTRA', '41000', '37,38,39,41,48')">🛒 Agregar al carrito</button>
-            </div>
-            
-            <div class="producto">
-              <h2>ULTRA TORRETIN</h2>
-              <p>Precio: $42000</p>
-              <p>Tallas disponibles: 37,38,39,41,49</p>
-              <div class="swiper">
-                <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/ultra-blanca-turqueza-torretin-3.png?v=1751089661" alt="ULTRA TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/ultra-negro-morado-torretin-3.png?v=1751089661" alt="ULTRA TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TABLADETALLASULTRATORRETIN.webp?v=1756929188" alt="ULTRA TORRETIN"></div>
-                </div>
-                <div class="swiper-pagination"></div>
-              </div>
-              <button class="boton" onclick="agregarCarrito('ULTRA TORRETIN', '42000', '37,38,39,41,49')">🛒 Agregar al carrito</button>
-            </div>
-            
-            <div class="producto">
-              <h2>PRO MAX FUTSAL</h2>
-              <p>Precio: $37000</p>
-              <p>Tallas disponibles: 37,38,39,41,44</p>
-              <div class="swiper">
-                <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/pro-max-blanca-3.png?v=1760803586" alt="PRO MAX FUTSAL"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/pro-max-negra-3.png?v=1760803586" alt="PRO MAX FUTSAL"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TABLADETALLASPROMAX_e6d59fdc-6f88-4b97-be45-9f4c15ecf8f0.webp?v=1761670520" alt="PRO MAX FUTSAL"></div>
-                </div>
-                <div class="swiper-pagination"></div>
-              </div>
-              <button class="boton" onclick="agregarCarrito('PRO MAX FUTSAL', '37000', '37,38,39,41,44')">🛒 Agregar al carrito</button>
-            </div>
-            
-            <div class="producto">
-              <h2>BARRIO TORRETIN</h2>
-              <p>Precio: $44000</p>
-              <p>Tallas disponibles: 37,38,39,41,51</p>
-              <div class="swiper">
-                <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/LATERALBARRIONEGRO1.webp?v=1755718061" alt="BARRIO TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Lateralbarriogris1.webp?v=1755718045" alt="BARRIO TORRETIN"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TABLADETALLASBARRIOTORRETIN.webp?v=1757782173" alt="BARRIO TORRETIN"></div>
-                </div>
-                <div class="swiper-pagination"></div>
-              </div>
-              <button class="boton" onclick="agregarCarrito('BARRIO TORRETIN', '44000', '37,38,39,41,51')">🛒 Agregar al carrito</button>
-            </div>
-            
-            <div class="producto">
-              <h2>LEGEND</h2>
-              <p>Precio: $45000</p>
-              <p>Tallas disponibles: 37,38,39,41,52</p>
-              <div class="swiper">
-                <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/laterallegendrojo.webp?v=1758580763" alt="LEGEND"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/laterallegendtuquesa.webp?v=1758580763" alt="LEGEND"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Sintitulo-4.webp?v=1758580763" alt="LEGEND"></div>
-                </div>
-                <div class="swiper-pagination"></div>
-              </div>
-              <button class="boton" onclick="agregarCarrito('LEGEND', '45000', '37,38,39,41,52')">🛒 Agregar al carrito</button>
-            </div>
-            
-            <div class="producto">
-              <h2>GUAYOS JUPITER</h2>
-              <p>Precio: $46000</p>
-              <p>Tallas disponibles: 37,38,39,41,53</p>
-              <div class="swiper">
-                <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateraljupiternegro.webp?v=1760461646" alt="GUAYOS JUPITER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateraljupiterblanco.webp?v=1765400030" alt="GUAYOS JUPITER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Lateral_jupiter_celeste.webp?v=1765400030" alt="GUAYOS JUPITER"></div>
-                </div>
-                <div class="swiper-pagination"></div>
-              </div>
-              <button class="boton" onclick="agregarCarrito('GUAYOS JUPITER', '46000', '37,38,39,41,53')">🛒 Agregar al carrito</button>
-            </div>
-            
-            <div class="producto">
-              <h2>BARRIO</h2>
-              <p>Precio: $47000</p>
-              <p>Tallas disponibles: 37,38,39,41,54</p>
-              <div class="swiper">
-                <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateral_barrio_negro_x_aguamarina.webp?v=1767712538" alt="BARRIO"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Lateral_barrio_azul_x_aguamarina.webp?v=1767712579" alt="BARRIO"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralbarrioblancoxaguamarina.webp?v=1767712033" alt="BARRIO"></div>
-                </div>
-                <div class="swiper-pagination"></div>
-              </div>
-              <button class="boton" onclick="agregarCarrito('BARRIO', '47000', '37,38,39,41,54')">🛒 Agregar al carrito</button>
-            </div>
-            
-            <div class="producto">
-              <h2>MAX RUNNING LEGER</h2>
-              <p>Precio: $48000</p>
-              <p>Tallas disponibles: 37,38,39,41,55</p>
-              <div class="swiper">
-                <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/laterallegerazul1.webp?v=1754344057" alt="MAX RUNNING LEGER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/suelalegerazul1.webp?v=1754344057" alt="MAX RUNNING LEGER"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TABLADETALLASLEGER.webp?v=1756916047" alt="MAX RUNNING LEGER"></div>
-                </div>
-                <div class="swiper-pagination"></div>
-              </div>
-              <button class="boton" onclick="agregarCarrito('MAX RUNNING LEGER', '48000', '37,38,39,41,55')">🛒 Agregar al carrito</button>
-            </div>
-            
-            <div class="producto">
-              <h2>DRAGON</h2>
-              <p>Precio: $43000</p>
-              <p>Tallas disponibles: 37,38,39,41,50</p>
-              <div class="swiper">
-                <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateraldragonnegroxazul.webp?v=1767639876" alt="DRAGON"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateraldragoncoral.webp?v=1767639876" alt="DRAGON"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateraldragonazulxaguamarina.webp?v=1767639876" alt="DRAGON"></div>
-                </div>
-                <div class="swiper-pagination"></div>
-              </div>
-              <button class="boton" onclick="agregarCarrito('DRAGON', '43000', '37,38,39,41,50')">🛒 Agregar al carrito</button>
-            </div>
-            
-            <div class="producto">
-              <h2>COMPLEX</h2>
-              <p>Precio: $40000</p>
-              <p>Tallas disponibles: 37,38,39,41,47</p>
-              <div class="swiper">
-                <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralcomplexrosa.webp?v=1767646350" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Lateralcomplexnegroxrosa.webp?v=1767646350" alt="COMPLEX"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Lateral_complex_morada_x_fucsia.webp?v=1767807244" alt="COMPLEX"></div>
-                </div>
-                <div class="swiper-pagination"></div>
-              </div>
-              <button class="boton" onclick="agregarCarrito('COMPLEX', '40000', '37,38,39,41,47')">🛒 Agregar al carrito</button>
-            </div>
-            
-            <div class="producto">
-              <h2>CG10</h2>
-              <p>Precio: $49000</p>
-              <p>Tallas disponibles: 37,38,39,41,56</p>
-              <div class="swiper">
-                <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Lateral_cg10_plateado.webp?v=1765387047" alt="CG10"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateral_cg10_verde_menta.png?v=1765389114" alt="CG10"></div><div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralcg10negroxamarillo.webp?v=1765487376" alt="CG10"></div>
-                </div>
-                <div class="swiper-pagination"></div>
-              </div>
-              <button class="boton" onclick="agregarCarrito('CG10', '49000', '37,38,39,41,56')">🛒 Agregar al carrito</button>
-            </div>
-            
+    <div class="producto">
+      <h2>PRO MAX FUTSAL</h2>
+      <p>Precio: ₡37000</p>
+      <p>Tallas disponibles: 39,40,41,42,43</p>
+      <div class="swiper" id="swiper-0">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralpromaxturquesa.webp?v=1770753162" alt="PRO MAX FUTSAL"></div>
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/pro-max-blanca-3.png?v=1770753162" alt="PRO MAX FUTSAL"></div>
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/pro-max-negra-3.png?v=1770753162" alt="PRO MAX FUTSAL"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+      <button class="boton" onclick="agregarCarrito('PRO MAX FUTSAL', '37000', '39,40,41,42,43')">🛒 Agregar al carrito</button>
+    </div>
+
+    <div class="producto">
+      <h2>UNIVERSAL</h2>
+      <p>Precio: ₡37000</p>
+      <p>Tallas disponibles: 39,40,41,42,43</p>
+      <div class="swiper" id="swiper-1">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateraluniversalblanco_3cbe3799-a676-4c54-8381-da0295cc02f5.webp?v=1762269114" alt="UNIVERSAL"></div>
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateraluniversalceleste.webp?v=1762269114" alt="UNIVERSAL"></div>
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateraluniversalnegro_03563976-329d-4b7f-9076-dabd1dd8b20f.webp?v=1762269114" alt="UNIVERSAL"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+      <button class="boton" onclick="agregarCarrito('UNIVERSAL', '37000', '39,40,41,42,43')">🛒 Agregar al carrito</button>
+    </div>
+
+    <div class="producto">
+      <h2>STREET</h2>
+      <p>Precio: ₡37000</p>
+      <p>Tallas disponibles: 39,40,41,42,43</p>
+      <div class="swiper" id="swiper-2">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralstreetmorado.webp?v=1760549603" alt="STREET"></div>
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralstreetblancoxazul.webp?v=1760549603" alt="STREET"></div>
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralstreetrojo.webp?v=1760549603" alt="STREET"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+      <button class="boton" onclick="agregarCarrito('STREET', '37000', '39,40,41,42,43')">🛒 Agregar al carrito</button>
+    </div>
+
+    <div class="producto">
+      <h2>ULTRA</h2>
+      <p>Precio: ₡38000</p>
+      <p>Tallas disponibles: 39,40,41,42,43</p>
+      <div class="swiper" id="swiper-3">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/ultra-negro-morado-3.png?v=1770755647" alt="ULTRA"></div>
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TURQUEZA-3_5a373dad-4d5c-4985-93b6-2e7d77e689c3.png?v=1770755647" alt="ULTRA"></div>
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TABLADETALLASULTRA.webp?v=1770755647" alt="ULTRA"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+      <button class="boton" onclick="agregarCarrito('ULTRA', '38000', '39,40,41,42,43')">🛒 Agregar al carrito</button>
+    </div>
+
+    <div class="producto">
+      <h2>ULTRA TORRETIN</h2>
+      <p>Precio: ₡38000</p>
+      <p>Tallas disponibles: 39,40,41,42,43</p>
+      <div class="swiper" id="swiper-4">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/ultra-blanca-turqueza-torretin-3.png?v=1751089661" alt="ULTRA TORRETIN"></div>
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/ultra-negro-morado-torretin-3.png?v=1751089661" alt="ULTRA TORRETIN"></div>
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TABLADETALLASULTRATORRETIN.webp?v=1756929188" alt="ULTRA TORRETIN"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+      <button class="boton" onclick="agregarCarrito('ULTRA TORRETIN', '38000', '39,40,41,42,43')">🛒 Agregar al carrito</button>
+    </div>
+
+    <div class="producto">
+      <h2>NEO</h2>
+      <p>Precio: ₡37000</p>
+      <p>Tallas disponibles: 39,40,41,42,43</p>
+      <div class="swiper" id="swiper-5">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralneoturquesa.webp?v=1758643341" alt="NEO"></div>
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Lateralneopalorosa.webp?v=1759783414" alt="NEO"></div>
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/detalleneopalorosa.webp?v=1759783414" alt="NEO"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+      <button class="boton" onclick="agregarCarrito('NEO', '37000', '39,40,41,42,43')">🛒 Agregar al carrito</button>
+    </div>
+
+    <div class="producto">
+      <h2>DRAGON</h2>
+      <p>Precio: ₡43000</p>
+      <p>Tallas disponibles: 39,40,41,42,43</p>
+      <div class="swiper" id="swiper-6">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateraldragonnegroxazul.webp?v=1767639876" alt="DRAGON"></div>
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateraldragoncoral.webp?v=1767639876" alt="DRAGON"></div>
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateraldragonazulxaguamarina.webp?v=1767639876" alt="DRAGON"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+      <button class="boton" onclick="agregarCarrito('DRAGON', '43000', '39,40,41,42,43')">🛒 Agregar al carrito</button>
+    </div>
+
+    <div class="producto">
+      <h2>VALO</h2>
+      <p>Precio: ₡37000</p>
+      <p>Tallas disponibles: 39,40,41,42,43</p>
+      <div class="swiper" id="swiper-7">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralvalonegro.webp?v=1770658846" alt="VALO"></div>
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateral_valo_coral.webp?v=1770658846" alt="VALO"></div>
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TABLADETALLASVALO_fefa5cec-7a42-4bc9-b727-c431f45b9b34.webp?v=1770658846" alt="VALO"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+      <button class="boton" onclick="agregarCarrito('VALO', '37000', '39,40,41,42,43')">🛒 Agregar al carrito</button>
+    </div>
+
+    <div class="producto">
+      <h2>BARRIO TORRETIN</h2>
+      <p>Precio: ₡37000</p>
+      <p>Tallas disponibles: 39,40,41,42,43</p>
+      <div class="swiper" id="swiper-8">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/LATERALBARRIONEGRO1.webp?v=1755718061" alt="BARRIO TORRETIN"></div>
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Lateralbarriogris1.webp?v=1755718045" alt="BARRIO TORRETIN"></div>
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TABLADETALLASBARRIOTORRETIN.webp?v=1757782173" alt="BARRIO TORRETIN"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+      <button class="boton" onclick="agregarCarrito('BARRIO TORRETIN', '37000', '39,40,41,42,43')">🛒 Agregar al carrito</button>
+    </div>
+
+    <div class="producto">
+      <h2>BARRIO</h2>
+      <p>Precio: ₡37000</p>
+      <p>Tallas disponibles: 39,40,41,42,43</p>
+      <div class="swiper" id="swiper-9">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateral_barrio_negro_x_aguamarina.webp?v=1767712538" alt="BARRIO"></div>
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Lateral_barrio_azul_x_aguamarina.webp?v=1767712579" alt="BARRIO"></div>
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralbarrioblancoxaguamarina.webp?v=1767712033" alt="BARRIO"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+      <button class="boton" onclick="agregarCarrito('BARRIO', '37000', '39,40,41,42,43')">🛒 Agregar al carrito</button>
+    </div>
+
+    <div class="producto">
+      <h2>COMPLEX</h2>
+      <p>Precio: ₡45000</p>
+      <p>Tallas disponibles: 39,40,41,42,43</p>
+      <div class="swiper" id="swiper-10">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/lateralcomplexrosa.webp?v=1767646350" alt="COMPLEX"></div>
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/Lateralcomplexnegroxrosa.webp?v=1767646350" alt="COMPLEX"></div>
+          <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/0474/0408/9497/files/TABLA_DE_TALLAS_COMPLEX_86329810-203c-46dd-8475-44bcecb1eeb8.webp?v=1770756263" alt="COMPLEX"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+      <button class="boton" onclick="agregarCarrito('COMPLEX', '45000', '39,40,41,42,43')">🛒 Agregar al carrito</button>
+    </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-document.querySelectorAll('.swiper').forEach(function(swiperEl) {
-  new Swiper(swiperEl, {
-    loop: true,
-    pagination: { el: swiperEl.querySelector('.swiper-pagination'), clickable: true },
-    autoplay: { delay: 2500, disableOnInteraction: false }
+document.addEventListener('DOMContentLoaded', function() {
+  // Inicializar Swiper para cada contenedor .swiper
+  document.querySelectorAll('.swiper').forEach(function(swiperEl) {
+    new Swiper(swiperEl, {
+      loop: true,
+      pagination: {
+        el: swiperEl.querySelector('.swiper-pagination'),
+        clickable: true
+      },
+      autoplay: {
+        delay: 3500,
+        disableOnInteraction: false
+      }
+    });
   });
+
+  const toggleCarrito = document.getElementById('toggleCarrito');
+  const carrito = document.getElementById('carrito');
+  const cerrarCarrito = document.getElementById('cerrarCarrito');
+  const listaCarrito = document.getElementById('lista-carrito');
+  const cartCount = document.getElementById('cart-count');
+  const carritoTotal = document.getElementById('carrito-total');
+
+  // Estado simple del carrito en memoria
+  let carritoItems = [];
+
+  function actualizarUICarrito() {
+    // actualizar lista
+    listaCarrito.innerHTML = '';
+    if (carritoItems.length === 0) {
+      listaCarrito.innerHTML = '<li class="empty">El carrito está vacío</li>';
+      carritoTotal.textContent = '';
+    } else {
+      let total = 0;
+      carritoItems.forEach(function(it, idx) {
+        const li = document.createElement('li');
+        li.textContent = it.nombre + ' - ₡' + it.precio + ' - ' + it.tallas;
+        // botón eliminar
+        const btn = document.createElement('button');
+        btn.textContent = 'Eliminar';
+        btn.style.marginLeft = '8px';
+        btn.style.background = '#ff3b3b';
+        btn.style.color = '#fff';
+        btn.style.border = 'none';
+        btn.style.borderRadius = '6px';
+        btn.style.padding = '4px 8px';
+        btn.style.cursor = 'pointer';
+        btn.onclick = function() {
+          carritoItems.splice(idx, 1);
+          actualizarUICarrito();
+        };
+        // contenedor para mostrar nombre y botón
+        const cont = document.createElement('div');
+        cont.style.display = 'flex';
+        cont.style.justifyContent = 'space-between';
+        cont.style.alignItems = 'center';
+        cont.style.width = '100%';
+        const spanLeft = document.createElement('span');
+        spanLeft.textContent = it.nombre + ' - ₡' + it.precio + ' - ' + it.tallas;
+        cont.appendChild(spanLeft);
+        cont.appendChild(btn);
+        li.innerHTML = '';
+        li.appendChild(cont);
+        listaCarrito.appendChild(li);
+
+        // intentar sumar precio si es numérico
+        const p = parseFloat(it.precio.replace(/[^0-9.-]+/g,""));
+        if (!isNaN(p)) total += p;
+      });
+      carritoTotal.textContent = 'Total aproximado: ₡' + total;
+    }
+    // actualizar badge
+    cartCount.textContent = carritoItems.length;
+  }
+
+  // Exponer función global para botones "Agregar al carrito"
+  window.agregarCarrito = function(nombre, precio, tallas) {
+    carritoItems.push({ nombre: nombre, precio: precio, tallas: tallas });
+    actualizarUICarrito();
+    // abrir carrito automáticamente al agregar
+    carrito.classList.add('visible');
+    carrito.setAttribute('aria-hidden', 'false');
+  };
+
+  toggleCarrito.addEventListener('click', () => {
+    carrito.classList.toggle('visible');
+    carrito.setAttribute('aria-hidden', carrito.classList.contains('visible') ? 'false' : 'true');
+  });
+
+  cerrarCarrito.addEventListener('click', () => {
+    carrito.classList.remove('visible');
+    carrito.setAttribute('aria-hidden', 'true');
+  });
+
+  // Inicial UI
+  actualizarUICarrito();
 });
-
-// Abrir carrito
-document.getElementById('toggleCarrito').addEventListener('click', () => {
-  document.getElementById('carrito').classList.add('visible');
-});
-
-// Cerrar carrito
-document.getElementById('cerrarCarrito').addEventListener('click', () => {
-  document.getElementById('carrito').classList.remove('visible');
-});
-
-function agregarCarrito(nombre, precio, tallas) {
-  const lista = document.getElementById('lista-carrito');
-  const item = document.createElement('li');
-  item.textContent = nombre + " - $" + precio + " - Tallas: " + tallas;
-  lista.appendChild(item);
-
-  let productos = [];
-  document.querySelectorAll('#lista-carrito li').forEach(li => productos.push(li.textContent));
-  const mensaje = encodeURIComponent("Hola, quiero comprar:\n" + productos.join("\n"));
-  document.getElementById('whatsapp').href = "https://wa.me/573001112233?text=" + mensaje;
-}
 </script>
+
 </body>
 </html>
