@@ -8,7 +8,6 @@ import unicodedata
 URL = "https://www.maxsport.com.co/collections/zapatillas-max/products.json"
 
 def normalize_text(s):
-    """Normaliza texto: strip, lower, quitar acentos."""
     if not isinstance(s, str):
         s = str(s)
     s = s.strip().lower()
@@ -31,20 +30,11 @@ def extraer_productos(url):
     return productos
 
 def leer_excel(ruta_excel):
-    """
-    Lee un Excel con columnas que contengan (insensible a mayúsculas):
-    nombre / nombre_producto / Nombre
-    precio / Precio
-    tallas / Tallas
-    Devuelve un diccionario normalizado: {nombre_normalizado: (precio, tallas)}
-    """
     if not os.path.exists(ruta_excel):
         print(f"No se encontró el archivo Excel: {ruta_excel}")
         return {}
-
     df = pd.read_excel(ruta_excel, dtype=str)
     df = df.fillna("")
-
     cols = {c.lower(): c for c in df.columns}
     col_nombre = None
     for key in ["nombre", "nombre_producto", "name", "producto", "producto_nombre"]:
@@ -61,11 +51,9 @@ def leer_excel(ruta_excel):
         if key in cols:
             col_tallas = cols[key]
             break
-
     if col_nombre is None:
         print("No se encontró columna de nombre en el Excel. Encabezados esperados: Nombre, nombre_producto")
         return {}
-
     datos = {}
     for _, row in df.iterrows():
         nombre_raw = str(row.get(col_nombre, "")).strip()
@@ -78,17 +66,18 @@ def leer_excel(ruta_excel):
     return datos
 
 def js_escape(s: str) -> str:
-    """Escapa comillas simples y barras para literales JS entre comillas simples."""
     return s.replace("\\", "\\\\").replace("'", "\\'")
 
 def generar_html(productos, datos_excel, archivo="catalogo.html"):
     ruta_actual = os.path.dirname(os.path.abspath(__file__))
     archivo_salida = os.path.join(ruta_actual, archivo)
 
+    # HTML head con meta viewport y CSS reforzado para una columna en móvil
     html_head = """<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"> <!-- IMPORTANTE para responsive -->
 <title>Regate Store - Futsal</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
@@ -102,90 +91,48 @@ def generar_html(productos, datos_excel, archivo="catalogo.html"):
   --danger:#ff3b3b;
   --icon-bg: rgba(255,255,255,0.02);
   --header-height-desktop: 90px;
-  --header-height-mobile: 140px; /* usado en mobile para calcular alturas */
+  --header-height-mobile: 140px;
 }
-
-/* Reset */
 *{box-sizing:border-box}
 html,body{height:100%}
 body{margin:0;background:var(--bg);font-family:'Montserrat',sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
 
 /* Header */
 header{
-  position:fixed;
-  top:0;left:0;width:100%;
-  background:var(--card);
-  display:flex;justify-content:center;align-items:center;
-  padding:14px 20px;z-index:10000;
+  position:fixed;top:0;left:0;width:100%;
+  background:var(--card);display:flex;justify-content:center;align-items:center;
+  padding:14px 20px;z-index:10000;height:var(--header-height-desktop);
   box-shadow:0 2px 12px rgba(0,0,0,0.6);
-  height: var(--header-height-desktop);
 }
-.header-inner{
-  width:95%;max-width:1200px;display:flex;justify-content:space-between;align-items:center;
-}
-header h1{
-  margin:0;font-size:28px;color:#fff;font-weight:900;letter-spacing:0.6px;
-}
+.header-inner{width:95%;max-width:1200px;display:flex;justify-content:space-between;align-items:center}
+header h1{margin:0;font-size:28px;color:#fff;font-weight:900;letter-spacing:0.6px}
 
 /* Right group */
 .header-right{display:flex;align-items:center;gap:16px}
-
-/* Redes */
 .redes{display:flex;gap:12px;align-items:center}
-.redes a{
-  color:var(--danger);text-decoration:none;
-  display:flex;align-items:center;justify-content:center;
-  width:40px;height:40px;border-radius:10px;background:var(--icon-bg);
-  transition:transform .12s ease, box-shadow .12s ease;
-  font-size:20px;
-}
+.redes a{color:var(--danger);text-decoration:none;display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px;background:var(--icon-bg);transition:transform .12s ease;font-size:20px}
 .redes a:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(0,0,0,0.6)}
 
-/* Carrito toggle */
-#toggleCarrito{
-  position:relative;background:var(--accent);color:#fff;padding:8px 12px;border-radius:22px;
-  display:flex;align-items:center;gap:8px;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,0.45)
-}
-#toggleCarrito .badge{
-  background:var(--danger);color:#fff;font-weight:800;font-size:12px;padding:3px 7px;border-radius:14px;min-width:22px;text-align:center;
-}
+#toggleCarrito{position:relative;background:var(--accent);color:#fff;padding:8px 12px;border-radius:22px;display:flex;align-items:center;gap:8px;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,0.45)}
+#toggleCarrito .badge{background:var(--danger);color:#fff;font-weight:800;font-size:12px;padding:3px 7px;border-radius:14px;min-width:22px;text-align:center}
 
 /* Carrito panel */
-#carrito{
-  position:fixed;top:calc(var(--header-height-desktop) + 8px);right:20px;background:var(--card);border:2px solid var(--accent);
-  padding:14px;width:380px;max-height:68vh;overflow-y:auto;border-radius:12px;transform:translateY(-8px);opacity:0;pointer-events:none;transition:all .18s ease;z-index:9999;
-}
+#carrito{position:fixed;top:calc(var(--header-height-desktop) + 8px);right:20px;background:var(--card);border:2px solid var(--accent);padding:14px;width:380px;max-height:68vh;overflow-y:auto;border-radius:12px;transform:translateY(-8px);opacity:0;pointer-events:none;transition:all .18s ease;z-index:9999}
 #carrito.visible{transform:translateY(0);opacity:1;pointer-events:auto}
 #carrito h3{margin:0 0 10px;text-align:center;font-weight:800}
 #carrito ul{list-style:none;padding:0;margin:0}
 #carrito li{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.03)}
 #carrito .empty{color:#bbb;text-align:center;padding:12px 0}
 
-/* Catalogo: en desktop usa grid/flex normal.
-   En mobile usaremos scroll-snap y una sola columna con tarjetas altas
-   para que se vea un modelo completo y el inicio del siguiente. */
-.catalogo {
-  margin-top: calc(var(--header-height-desktop) + 20px);
-  width:95%;
-  margin-left:auto;
-  margin-right:auto;
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:space-around;
-  gap:16px;
-  padding-bottom:80px;
+/* Catalogo (desktop/tablet default) */
+.catalogo{
+  margin-top:calc(var(--header-height-desktop) + 20px);
+  width:95%;margin-left:auto;margin-right:auto;
+  display:flex;flex-wrap:wrap;justify-content:space-around;gap:16px;padding-bottom:80px;
 }
 
-/* Tarjeta producto */
-.producto{
-  width:30%;
-  background:var(--card);
-  margin:10px;
-  padding:16px;
-  border-radius:14px;
-  box-shadow:0 8px 24px rgba(0,0,0,0.6);
-  transition:transform .12s ease;
-}
+/* Producto tarjeta */
+.producto{width:30%;background:var(--card);margin:10px;padding:16px;border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,0.6);transition:transform .12s ease}
 .producto:hover{transform:translateY(-6px)}
 .producto h2{font-size:18px;color:#fff;text-align:center;margin:8px 0;font-weight:800}
 .producto .precio{font-size:16px;color:var(--muted);text-align:center;margin:6px 0;font-weight:700}
@@ -206,77 +153,57 @@ header h1{
   .producto{width:45%}
 }
 
-/* MOBILE: UNA COLUMNA + SCROLL SNAP + TARJETAS ALTAS para mostrar 1 modelo y el inicio del siguiente */
+/* MOBILE: UNA COLUMNA FORZADA + SCROLL SNAP */
 @media (max-width:768px){
   :root { --header-height: var(--header-height-mobile); }
-  header{height:var(--header-height-mobile); padding:18px 12px}
+  header{height:var(--header-height-mobile);padding:18px 12px}
   .header-inner{width:96%;flex-direction:column;align-items:center;gap:12px}
-  header h1{
-    font-size:44px;
-    line-height:1.02;
-    text-align:center;
-    font-weight:900;
-    letter-spacing:1px;
-  }
+  header h1{font-size:44px;line-height:1.02;text-align:center;font-weight:900;letter-spacing:1px}
   .header-right{width:100%;display:flex;justify-content:center;gap:20px}
   .redes{gap:18px}
-  .redes a{
-    width:72px;height:72px;font-size:34px;border-radius:14px;background:var(--icon-bg);
-    display:flex;align-items:center;justify-content:center;
-  }
-  #toggleCarrito{
-    padding:14px 18px;font-size:22px;border-radius:30px;
-    box-shadow:0 12px 30px rgba(0,0,0,0.6)
-  }
-  #toggleCarrito .badge{
-    min-width:34px;padding:8px 12px;font-size:14px;border-radius:18px;font-weight:900
+  .redes a{width:72px;height:72px;font-size:34px;border-radius:14px;background:var(--icon-bg);display:flex;align-items:center;justify-content:center}
+  #toggleCarrito{padding:14px 18px;font-size:22px;border-radius:30px;box-shadow:0 12px 30px rgba(0,0,0,0.6)}
+  #toggleCarrito .badge{min-width:34px;padding:8px 12px;font-size:14px;border-radius:18px;font-weight:900}
+
+  /* CONTENEDOR: UNA COLUMNA y scroll-snap */
+  .catalogo{
+    margin-top:calc(var(--header-height-mobile) + 10px) !important;
+    display:flex !important;
+    flex-direction:column !important;      /* fuerza columna */
+    align-items:center !important;
+    gap:18px !important;
+    padding-bottom:120px !important;
+    height:calc(100vh - var(--header-height-mobile)) !important;
+    overflow-y:auto !important;
+    scroll-snap-type:y mandatory !important;
+    -webkit-overflow-scrolling:touch !important;
+    flex-wrap:nowrap !important;           /* evita que se formen columnas */
   }
 
-  /* Catalogo: ocupar el espacio restante de la pantalla y usar scroll-snap */
-  .catalogo {
-    margin-top: calc(var(--header-height-mobile) + 10px);
-    display:flex;
-    flex-direction:column;      /* una columna */
-    align-items:center;
-    gap:18px;
-    padding-bottom:120px;
-    /* Hacemos que el contenedor ocupe la altura disponible para permitir el efecto "peek" */
-    height: calc(100vh - var(--header-height-mobile));
-    overflow-y: auto;
-    scroll-snap-type: y mandatory;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* Cada tarjeta ocupa casi toda la altura visible menos un "peek" para el siguiente */
-  .producto {
-    width:94%;
-    padding:18px;
-    margin:0; /* el gap lo maneja el contenedor */
-    border-radius:16px;
-    height: calc(100vh - var(--header-height-mobile) - 80px); /* tarjeta alta */
-    min-height: 420px;
-    max-height: calc(100vh - var(--header-height-mobile) - 60px);
-    display:flex;
-    flex-direction:column;
-    justify-content:flex-start;
-    scroll-snap-align: start; /* al hacer scroll, cada tarjeta encaja al inicio */
-    box-shadow: 0 12px 36px rgba(0,0,0,0.6);
+  /* TARJETA: ocupa casi toda la altura visible para mostrar 1 modelo y "peek" del siguiente */
+  .producto{
+    width:94% !important;                  /* fuerza ancho completo */
+    padding:18px !important;
+    margin:0 !important;
+    border-radius:16px !important;
+    height:calc(100vh - var(--header-height-mobile) - 80px) !important;
+    min-height:420px !important;
+    max-height:calc(100vh - var(--header-height-mobile) - 60px) !important;
+    display:flex !important;
+    flex-direction:column !important;
+    justify-content:flex-start !important;
+    scroll-snap-align:start !important;
+    box-shadow:0 12px 36px rgba(0,0,0,0.6) !important;
   }
 
   .producto h2{font-size:26px;margin:12px 0 8px}
   .producto .precio{font-size:20px}
   .producto .tallas{font-size:18px}
 
-  /* Carrusel más alto para ocupar la parte superior de la tarjeta */
-  .swiper{height:48%; border-radius:12px}
-  .swiper-slide img{object-fit:cover}
+  .swiper{height:48% !important;border-radius:12px}
+  .boton{padding:16px 22px;font-size:18px;border-radius:12px;margin-top:auto}
 
-  .boton{padding:16px 22px;font-size:18px;border-radius:12px;margin-top:auto} /* botón pegado abajo de la tarjeta */
-
-  /* Carrito panel más ancho y más abajo */
-  #carrito{
-    width:94%;right:2%;top:calc(var(--header-height-mobile) + 8px);max-height:60vh;padding:16px;border-radius:14px;
-  }
+  #carrito{width:94% !important;right:2% !important;top:calc(var(--header-height-mobile) + 8px) !important;max-height:60vh !important;padding:16px !important;border-radius:14px !important}
 }
 
 /* Very small devices */
@@ -324,7 +251,6 @@ header h1{
     partes = [html_head]
     contador = 0
 
-    # Mostrar SOLO los modelos que están en el Excel (comparación normalizada)
     for prod in productos:
         nombre = prod.get("nombre", "")
         nombre_norm = normalize_text(nombre)
@@ -376,7 +302,6 @@ header h1{
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Inicializar Swiper para cada contenedor .swiper
   document.querySelectorAll('.swiper').forEach(function(swiperEl) {
     new Swiper(swiperEl, {
       loop: true,
@@ -399,7 +324,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const carritoTotal = document.getElementById('carrito-total');
   const catalogo = document.getElementById('catalogo');
 
-  // Estado simple del carrito en memoria
   let carritoItems = [];
 
   function actualizarUICarrito() {
@@ -411,18 +335,15 @@ document.addEventListener('DOMContentLoaded', function() {
       let total = 0;
       carritoItems.forEach(function(it, idx) {
         const li = document.createElement('li');
-
         const cont = document.createElement('div');
         cont.style.display = 'flex';
         cont.style.justifyContent = 'space-between';
         cont.style.alignItems = 'center';
         cont.style.width = '100%';
-
         const spanLeft = document.createElement('span');
         spanLeft.textContent = it.nombre + ' - ₡' + it.precio + ' - ' + it.tallas;
         spanLeft.style.flex = '1';
         spanLeft.style.marginRight = '8px';
-
         const btn = document.createElement('button');
         btn.textContent = 'Eliminar';
         btn.style.background = '#ff3b3b';
@@ -435,12 +356,10 @@ document.addEventListener('DOMContentLoaded', function() {
           carritoItems.splice(idx, 1);
           actualizarUICarrito();
         };
-
         cont.appendChild(spanLeft);
         cont.appendChild(btn);
         li.appendChild(cont);
         listaCarrito.appendChild(li);
-
         const p = parseFloat(it.precio.replace(/[^0-9.-]+/g,""));
         if (!isNaN(p)) total += p;
       });
@@ -449,17 +368,16 @@ document.addEventListener('DOMContentLoaded', function() {
     cartCount.textContent = carritoItems.length;
   }
 
-  // Exponer función global para botones "Agregar al carrito"
   window.agregarCarrito = function(nombre, precio, tallas) {
     carritoItems.push({ nombre: nombre, precio: precio, tallas: tallas });
     actualizarUICarrito();
     carrito.classList.add('visible');
     carrito.setAttribute('aria-hidden', 'false');
-
-    // En móviles, desplazar la vista hacia el carrito para que el usuario lo vea
     if (window.innerWidth <= 768) {
       setTimeout(() => {
-        carrito.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // al agregar, hacemos scroll suave para que el usuario vea la tarjeta actual y el "peek"
+        const top = window.scrollY;
+        window.scrollTo({ top: top + 10, behavior: 'smooth' });
       }, 150);
     }
   };
@@ -474,13 +392,10 @@ document.addEventListener('DOMContentLoaded', function() {
     carrito.setAttribute('aria-hidden', 'true');
   });
 
-  // Mejora UX: en móvil, al soltar scroll, ajustar para que la tarjeta active quede alineada (snap already handles most)
   if (window.innerWidth <= 768) {
-    // permitir scroll con el dedo y suavizar el snap
     catalogo.style.scrollBehavior = 'smooth';
   }
 
-  // Inicial UI
   actualizarUICarrito();
 });
 </script>
@@ -496,16 +411,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     print(f"Archivo generado: {archivo_salida} ({contador} productos)")
 
-# Bloque principal
 if __name__ == "__main__":
     try:
         productos = extraer_productos(URL)
     except Exception as e:
         print("Error al descargar productos:", e)
         productos = []
-
-    # Ruta del Excel (coloca 'productos.xlsx' en la misma carpeta)
     ruta_excel = os.path.join(os.path.dirname(os.path.abspath(__file__)), "productos.xlsx")
     datos_excel = leer_excel(ruta_excel)
-
     generar_html(productos, datos_excel, archivo="catalogo.html")
