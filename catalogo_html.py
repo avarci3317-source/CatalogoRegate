@@ -162,7 +162,7 @@ button{{margin-top:10px;padding:12px;width:100%;background:#fff;border:none;font
 <div class="info">
 <h2>{html.escape(nombre)}</h2>
 
-<div class="ps">Precio Sugerido: ₡{d['ps']}</div>
+<div class="ps">Precio: ₡{d['ps']}</div>
 <div class="pm">Precio Mayorista: ₡{d['pm']}</div>
 
 <div class="tallas">Tallas: {html.escape(d['tallas'])}</div>
